@@ -5,6 +5,7 @@ import { createElement } from 'react';
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import App from '../src/App';
+import { groupPostsByCategory } from '../src/content/groupPosts';
 import { loadPosts } from '../src/content/loadPosts';
 import { PostsProvider } from '../src/content/PostsContext';
 import { collectPrerenderPaths } from '../src/content/prerenderPaths';
@@ -50,6 +51,12 @@ export function prerender(options?: {
 
   const homeHtml = injectAppHtml(template, renderRoute('/', posts));
   writePage(join(outDir, 'index.html'), homeHtml);
+
+  for (const group of groupPostsByCategory(posts)) {
+    const url = `/topics/${group.id}`;
+    const html = injectAppHtml(template, renderRoute(url, posts));
+    writePage(join(outDir, 'topics', group.id, 'index.html'), html);
+  }
 
   for (const post of posts) {
     const url = `/posts/${post.slug}/`;

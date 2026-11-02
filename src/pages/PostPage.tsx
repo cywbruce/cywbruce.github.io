@@ -27,7 +27,11 @@ export function PostPage() {
         <Link to="/">{t('post.back')}</Link>
       </p>
       {post.category ? (
-        <p className="post-category">{post.category}</p>
+        <p>
+          <Link to={`/topics/${post.category}`} className="post-category">
+            {post.category}
+          </Link>
+        </p>
       ) : null}
       <h1>{post.title}</h1>
       <time dateTime={post.date}>{post.date}</time>

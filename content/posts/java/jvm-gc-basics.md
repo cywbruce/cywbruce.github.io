@@ -31,4 +31,9 @@ public class Demo {
 }
 ```
 
-本篇只做目录与渲染演示；深入调优以后再写专题。
+本篇只做 JVM 侧入门。延伸阅读：
+
+- [JVM 知识点地图](/posts/java/jvm-knowledge-map/)  
+- [生产向 JVM 指南](/posts/java/jvm-production-guide/)  
+- [多语言垃圾回收](/posts/java/gc-across-languages/)  
+- [Java 深水区](/posts/java/java-deep-water/)

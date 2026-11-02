@@ -1,4 +1,4 @@
-import { PostList } from '../components/PostList';
+import { Link } from 'react-router-dom';
 import {
   groupPostsByCategory,
   UNCATEGORIZED_ID,
@@ -29,36 +29,20 @@ export function HomePage() {
 
   return (
     <section className="home">
-      <nav className="topic-nav" aria-label={t('nav.topics')}>
+      <nav className="topic-portal" aria-label={t('topic.nav')}>
         {groups.map((group) => (
-          <a
+          <Link
             key={group.id}
-            className="topic-nav-item"
-            href={`#topic-${group.id}`}
+            className="topic-portal-item"
+            to={`/topics/${group.id}`}
           >
-            {categoryLabel(group.id, t)}
-            <span className="topic-nav-count">{group.posts.length}</span>
-          </a>
+            <span className="topic-portal-name">
+              {categoryLabel(group.id, t)}
+            </span>
+            <span className="topic-portal-count">{group.posts.length}</span>
+          </Link>
         ))}
       </nav>
-
-      <div className="topic-sections">
-        {groups.map((group) => (
-          <section
-            key={group.id}
-            id={`topic-${group.id}`}
-            className="topic-section"
-          >
-            <header className="topic-header">
-              <h2 className="topic-title">
-                {categoryLabel(group.id, t)}
-              </h2>
-              <span className="topic-count">{group.posts.length}</span>
-            </header>
-            <PostList posts={group.posts} />
-          </section>
-        ))}
-      </div>
     </section>
   );
 }

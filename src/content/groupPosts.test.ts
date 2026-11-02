@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { groupPostsByCategory, UNCATEGORIZED_ID } from './groupPosts';
+import {
+  findPostGroup,
+  groupPostsByCategory,
+  UNCATEGORIZED_ID,
+} from './groupPosts';
 import type { Post } from './types';
 
 function post(partial: Partial<Post> & Pick<Post, 'slug' | 'title'>): Post {
@@ -22,5 +26,15 @@ describe('groupPostsByCategory', () => {
     expect(groups.map((g) => g.id)).toEqual(['java', 'ops', UNCATEGORIZED_ID]);
     expect(groups[0].posts.map((p) => p.slug)).toEqual(['java/b', 'java/c']);
     expect(groups[2].posts).toHaveLength(1);
+  });
+
+  it('findPostGroup returns matching group or undefined', () => {
+    const posts = [
+      post({ slug: 'java/b', title: 'B', category: 'java' }),
+      post({ slug: 'a', title: 'A' }),
+    ];
+    expect(findPostGroup(posts, 'java')?.posts).toHaveLength(1);
+    expect(findPostGroup(posts, UNCATEGORIZED_ID)?.posts[0].slug).toBe('a');
+    expect(findPostGroup(posts, 'missing')).toBeUndefined();
   });
 });

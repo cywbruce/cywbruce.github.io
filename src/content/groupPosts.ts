@@ -33,3 +33,10 @@ export function groupPostsByCategory(posts: Post[]): PostGroup[] {
 
   return groups;
 }
+
+export function findPostGroup(
+  posts: Post[],
+  categoryId: string,
+): PostGroup | undefined {
+  return groupPostsByCategory(posts).find((g) => g.id === categoryId);
+}
