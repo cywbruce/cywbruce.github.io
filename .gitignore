@@ -1,0 +1,10 @@
+# Agent 临时工作区（可清空，不纳入版本控制）
+agent-workspace/
+
+# Node
+node_modules/
+dist/
+.DS_Store
+*.log
+
+.idea/
