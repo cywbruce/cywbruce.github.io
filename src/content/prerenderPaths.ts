@@ -16,7 +16,7 @@ function sortedCategoryIds(posts: Pick<Post, 'category'>[]): string[] {
 export function collectPrerenderPaths(
   posts: Pick<Post, 'slug' | 'category'>[],
 ): string[] {
-  const paths = ['index.html', '404.html'];
+  const paths = ['index.html', '404.html', 'interview/index.html'];
   for (const id of sortedCategoryIds(posts)) {
     paths.push(`topics/${id}/index.html`);
   }

@@ -518,6 +518,124 @@ button {
   min-height: 2.25rem;
 }
 
+.topic-portal-interview .topic-portal-name {
+  text-transform: none;
+}
+
+.interview-lead {
+  margin: 0 0 1rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.interview-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 0 0 1.1rem;
+}
+
+.interview-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2.1rem;
+  padding: 0.2rem 0.65rem;
+  border: 1px solid var(--border);
+  border-radius: 0.35rem;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.interview-filter.is-active {
+  color: var(--fg);
+  border-color: var(--accent);
+  background: rgba(15, 118, 110, 0.08);
+}
+
+.interview-filter-count {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8em;
+  opacity: 0.75;
+}
+
+.interview-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: interview-q;
+}
+
+.interview-item {
+  border-bottom: 1px solid var(--border);
+}
+
+.interview-item:first-child {
+  border-top: 1px solid var(--border);
+}
+
+.interview-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.85rem 0.1rem;
+  color: inherit;
+  text-decoration: none;
+  border-radius: 0.35rem;
+  transition: background 0.15s ease;
+}
+
+.interview-link:active {
+  background: rgba(15, 118, 110, 0.06);
+}
+
+.interview-question {
+  counter-increment: interview-q;
+  font-size: 1.02rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--fg);
+}
+
+.interview-question::before {
+  content: counter(interview-q) ". ";
+  color: var(--muted);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.interview-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.35rem;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.interview-meta-cat {
+  text-transform: lowercase;
+}
+
+.interview-meta-sep {
+  opacity: 0.6;
+}
+
+.interview-meta-heading {
+  overflow-wrap: anywhere;
+}
+
+.post-body h2:target,
+.post-body h3:target {
+  outline: 2px solid rgba(15, 118, 110, 0.35);
+  outline-offset: 0.25rem;
+  border-radius: 0.2rem;
+}
+
 .post h1 {
   margin: 0 0 0.35rem;
   font-size: clamp(1.55rem, 6vw, 2.1rem);
@@ -644,3 +762,44 @@ pre {
     animation: none;
   }
 }
+
+/* ---- interview: track / level ---- */
+.interview-filters.is-track .interview-filter { font-weight: 600; }
+.interview-filters.is-sub { opacity: 0.9; font-size: 0.92em; }
+.interview-level-section { margin-top: 1.6rem; }
+.interview-level-title {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 1.05rem; margin: 0 0 0.6rem;
+  padding-left: 0.6rem; border-left: 4px solid currentColor;
+}
+.interview-level-title.level-junior { color: #2f9e44; }
+.interview-level-title.level-mid { color: #1971c2; }
+.interview-level-title.level-senior { color: #c2255c; }
+.interview-level-title.level-ungraded { color: #868e96; }
+.level-badge {
+  display: inline-block; font-size: 0.75em; line-height: 1;
+  padding: 0.2em 0.5em; border-radius: 999px; margin-right: 0.35em;
+  color: #fff; background: #868e96;
+}
+.level-badge.level-junior { background: #2f9e44; }
+.level-badge.level-mid { background: #1971c2; }
+.level-badge.level-senior { background: #c2255c; }
+.interview-answer-hint { margin-left: auto; opacity: 0.6; font-size: 0.85em; }
+.post-body h3:target, .post-body h2:target {
+  background: rgba(255, 212, 59, 0.25); border-radius: 4px; scroll-margin-top: 4rem;
+}
+
+/* ---- home roadmap entry ---- */
+.roadmap-hero {
+  margin: 0 0 1.8rem; padding: 1rem 1.1rem;
+  border: 1px solid rgba(128,128,128,0.25); border-radius: 12px;
+}
+.roadmap-hero-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 0.8rem; }
+.roadmap-hero-title { margin: 0; font-size: 1.15rem; }
+.roadmap-hero-more { font-size: 0.9em; opacity: 0.75; }
+.roadmap-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem; }
+.roadmap-card { padding: 0.75rem; border-radius: 10px; background: rgba(128,128,128,0.08); }
+.roadmap-card-title { display: block; font-weight: 600; margin-bottom: 0.5rem; text-decoration: none; }
+.roadmap-levels { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.roadmap-levels .level-badge { text-decoration: none; font-size: 0.85em; padding: 0.35em 0.7em; }
+.roadmap-levels .level-badge:hover { filter: brightness(1.1); }

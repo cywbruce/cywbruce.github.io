@@ -1,4 +1,5 @@
-import { Link, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom';
 import { usePosts } from '../content/PostsContext';
 import { useLocale } from '../i18n/LocaleContext';
 import { NotFoundPage } from './NotFoundPage';
@@ -12,10 +13,28 @@ function normalizePostSlug(splat: string | undefined): string {
 
 export function PostPage() {
   const params = useParams();
+  const { hash } = useLocation();
+  const [searchParams] = useSearchParams();
   const slug = normalizePostSlug(params['*']);
   const posts = usePosts();
   const { t } = useLocale();
   const post = posts.find((p) => p.slug === slug);
+  const fromInterview = searchParams.get('from') === 'interview';
+
+  useEffect(() => {
+    if (!post || !hash) {
+      return;
+    }
+    const id = decodeURIComponent(hash.replace(/^#/, ''));
+    if (!id) {
+      return;
+    }
+    // Wait a tick so innerHTML is in the DOM before scrolling to the answer.
+    const timer = window.setTimeout(() => {
+      document.getElementById(id)?.scrollIntoView({ block: 'start' });
+    }, 0);
+    return () => window.clearTimeout(timer);
+  }, [post, hash, slug]);
 
   if (!post) {
     return <NotFoundPage />;
@@ -24,7 +43,11 @@ export function PostPage() {
   return (
     <article className="post">
       <p className="post-back">
-        <Link to="/">{t('post.back')}</Link>
+        {fromInterview ? (
+          <Link to={`/interview${typeof window !== 'undefined' ? sessionStorage.getItem('interviewQuery') ?? '' : ''}`}>{t('post.backInterview')}</Link>
+        ) : (
+          <Link to="/">{t('post.back')}</Link>
+        )}
       </p>
       {post.category ? (
         <p>

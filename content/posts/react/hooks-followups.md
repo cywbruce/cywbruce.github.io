@@ -8,7 +8,7 @@ summary: 围绕 useState / useEffect / useMemo / 自定义 Hook 的追问树，�
 
 ---
 
-## useState
+## useState（中级）
 
 **主问：** `useState` 的更新是同步还是异步的？批量更新了解吗？
 
@@ -22,7 +22,7 @@ summary: 围绕 useState / useEffect / useMemo / 自定义 Hook 的追问树，�
 
 ---
 
-## useEffect
+## useEffect（中级）
 
 **主问：** 依赖数组你怎么定？漏了或写多了会怎样？
 
@@ -37,7 +37,7 @@ summary: 围绕 useState / useEffect / useMemo / 自定义 Hook 的追问树，�
 
 ---
 
-## useMemo / useCallback / memo
+## useMemo / useCallback / memo（中级）
 
 **主问：** 这两兄弟是不是写得越多越快？
 
@@ -50,7 +50,7 @@ summary: 围绕 useState / useEffect / useMemo / 自定义 Hook 的追问树，�
 
 ---
 
-## useRef
+## useRef（中级）
 
 **主问：** `useRef` 和 `useState` 怎么选？
 
@@ -62,7 +62,7 @@ summary: 围绕 useState / useEffect / useMemo / 自定义 Hook 的追问树，�
 
 ---
 
-## 自定义 Hook
+## 自定义 Hook（中高级）
 
 **主问：** 判断下面该不该做成 Hook：本地存储同步、金额格式化、WebSocket 订阅。
 

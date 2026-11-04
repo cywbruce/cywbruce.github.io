@@ -58,6 +58,9 @@ export function Layout() {
             </button>
           ) : null}
           {!isHome ? <Link to="/">{t('nav.home')}</Link> : null}
+          {pathname !== '/interview' ? (
+            <Link to="/interview">{t('nav.interview')}</Link>
+          ) : null}
           <LanguageSwitch />
         </nav>
       </header>
