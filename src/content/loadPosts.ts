@@ -83,6 +83,9 @@ function parsePostFile(rootDir: string, filePath: string): Post {
   if (category) {
     post.category = category;
   }
+  if (data.interview === false) {
+    post.interview = false;
+  }
   return post;
 }
 

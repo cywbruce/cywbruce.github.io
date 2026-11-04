@@ -86,6 +86,21 @@ describe('extractInterviewQuestions', () => {
   });
 });
 
+describe('interview opt-out', () => {
+  it('skips posts with interview: false', () => {
+    const posts: Post[] = [
+      {
+        slug: 'a',
+        title: 'A',
+        date: '2026-01-01',
+        html: decorateHeadingIds('<h3>Q</h3><p><strong>主问：</strong> 题一？</p>'),
+        interview: false,
+      },
+    ];
+    expect(extractInterviewQuestions(posts)).toHaveLength(0);
+  });
+});
+
 describe('interviewQuestionHref', () => {
   it('includes from=interview and heading hash', () => {
     expect(

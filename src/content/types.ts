@@ -6,5 +6,7 @@ export interface Post {
   summary?: string;
   /** First path segment when slug is nested, e.g. `java`. */
   category?: string;
+  /** frontmatter `interview: false` → 不收录进题库 */
+  interview?: boolean;
   html: string;
 }

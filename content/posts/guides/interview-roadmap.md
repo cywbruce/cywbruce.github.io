@@ -22,6 +22,7 @@ summary: 总入口：三个方向 × 初 / 中 / 高，一键跳到题库筛选�
 - [大厂 Java 后端模拟面经（三轮）](/posts/backend/bigtech-java-backend-mock-interview/)
 - [架构师模拟面经（三轮）](/posts/architect/architect-mock-interview/)
 - [AI 工程师模拟面经（三轮）](/posts/ai/ai-engineer-mock-interview/)
+- [Java 后端转 AI 工程（LLM · RAG · Agent · MCP 串讲）](/posts/ai/java-ai-engineering-interview/)
 
 ## 方向包含的专题
 

@@ -23,6 +23,8 @@ summary: 可选摘要
 ---
 ```
 
+可选 `interview: false`：文章里的「主问」不收录进面试题库，只作为普通文章阅读。
+
 缺少 `title` 或 `date` 时，`npm run build` 会失败并打印文件路径。
 
 

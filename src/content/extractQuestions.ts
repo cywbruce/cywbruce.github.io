@@ -111,7 +111,7 @@ export function extractQuestionsFromHtml(
 export function extractInterviewQuestions(posts: Post[]): InterviewQuestion[] {
   const out: InterviewQuestion[] = [];
   for (const post of posts) {
-    if (!post.html.includes('主问')) {
+    if (post.interview === false || !post.html.includes('主问')) {
       continue;
     }
     out.push(
