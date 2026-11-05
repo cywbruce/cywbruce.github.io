@@ -27,7 +27,7 @@ describe('extractQuestionsFromHtml', () => {
     expect(questions).toHaveLength(2);
     expect(questions[0].question).toBe('Redis 为什么性能高？');
     expect(questions[0].heading).toBe('1. 为什么快？（初级）');
-    expect(questions[0].headingId).toBe('toc-2');
+    expect(questions[0].headingId).toBe('q1');
     expect(questions[0].category).toBe('redis');
     expect(questions[1].question).toBe('Key 过期后是立刻删吗？');
   });

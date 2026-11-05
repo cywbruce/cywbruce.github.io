@@ -2,6 +2,7 @@
 title: 后端分级面试题（基础 · 存储 · 分布式 · 排障）
 date: 2026-11-04
 summary: 后端面试：初 / 中 / 高分级题目，含参考答案、追问与定级。
+kind: qa
 ---
 
 面向后端面试。专项见 [Java](/posts/java/java-interview/)、[MySQL](/posts/mysql/mysql-interview/)、[Redis](/posts/redis/redis-interview/)、[MQ](/posts/mq/mq-interview-map/)。
@@ -123,3 +124,4 @@ summary: 后端面试：初 / 中 / 高分级题目，含参考答案、追问�
 **追问：** 采样率怎么定？尾部采样有什么好处？
 
 ---
+- [分布式系统深度面试手册](/posts/backend/distributed-systems-handbook/)

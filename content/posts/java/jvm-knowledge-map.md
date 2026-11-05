@@ -2,6 +2,7 @@
 title: JVM 知识点地图：有多少、学什么、怎么分层
 date: 2026-11-08
 summary: JVM 没有固定「知识点个数」。按 10 大领域拆开；入门约 20 个核心点，生产级可细到上百项；附学习路径。
+kind: map
 ---
 
 「JVM 有多少知识点？」没有标准数字。更有用的是：**按领域建地图，按目标定深度**。
@@ -67,6 +68,17 @@ summary: JVM 没有固定「知识点个数」。按 10 大领域拆开；入门
 
 ---
 
+## 追问链（面试官用）
+
+| 主问 | 初级期望 | 中级追问 | 高级追问 | 答案 / 深入 |
+| --- | --- | --- | --- | --- |
+| 运行时内存分哪几块 | 堆、栈、方法区 | 元空间为什么替代永久代、直接内存 | 每个区域 OOM 的现象和排查 | [Java 题 · 8](/posts/java/java-interview/#q8) · [JVM 手册 · 一](/posts/java/jvm-handbook/#sec-1) |
+| JMM / volatile | 可见性 | happens-before、禁止指令重排 | 双重检查锁为什么必须加 volatile | [JVM 手册 · 二](/posts/java/jvm-handbook/#sec-2) |
+| GC 算法与收集器 | 分代、Minor/Full GC | CMS 和 G1 的区别、三色标记 | ZGC 原理、按停顿目标选型 | [Java 题 · 9](/posts/java/java-interview/#q9) · [JVM 手册 · 三、四](/posts/java/jvm-handbook/#sec-3) |
+| GC 调优 | -Xms / -Xmx | 读 GC 日志、频繁 Full GC 的原因 | 容器内调优、调优前后的对比指标 | [JVM 手册 · 五](/posts/java/jvm-handbook/#sec-5) · [生产向 JVM](/posts/java/jvm-production-guide/) |
+| 类加载 | 加载、链接、初始化 | 双亲委派 | 打破双亲委派、热部署 | [Java 题 · 10](/posts/java/java-interview/#q10) · [JVM 手册 · 六](/posts/java/jvm-handbook/#sec-6) |
+| 线上排查 | 看日志 | CPU 100%（top → jstack）、内存泄漏（MAT） | 用 Arthas 定位、事故复盘 | [JVM 手册 · 七](/posts/java/jvm-handbook/#sec-7) |
+
 ## 学习路径建议
 
 | 阶段 | 做什么 |
@@ -77,3 +89,4 @@ summary: JVM 没有固定「知识点个数」。按 10 大领域拆开；入门
 | 专家 | 建立自己的「故障手册」：每个案例写清现象→证据→改动→回滚 |
 
 面试向可配合 [Java 面试题 · JVM 章节](/posts/java/java-interview/)。
+- [JVM 与性能调优深度面试手册](/posts/java/jvm-handbook/)

@@ -2,6 +2,7 @@
 title: Markdown 展示：标题、列表与代码
 date: 2026-10-30
 summary: 第二篇 demo：常见 Markdown 语法在博客里的渲染效果。
+kind: guide
 ---
 
 本页用来快速扫一眼排版是否舒服。

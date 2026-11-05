@@ -2,6 +2,7 @@
 title: Java 面试官地图：怎么出题、怎么定级
 date: 2026-11-07
 summary: 60 分钟组卷模板；按初 / 中 / 高选题；链到核心题库、并发深挖与资料库。
+kind: map
 ---
 
 面向**面试官**。先定目标职级，再选题；不要一轮塞满所有模块。
@@ -75,3 +76,24 @@ summary: 60 分钟组卷模板；按初 / 中 / 高选题；链到核心题库�
 - [ ] 表达结构化，承认不知道并会查  
 
 **原则：** 追问看深度；给线索后仍能推进，比一次性背满分更有信号。
+
+## 追问链
+
+| 主问（题库） | 初级期望 | 中级追问 | 高级追问 |
+| --- | --- | --- | --- |
+| [ArrayList vs LinkedList](/posts/java/java-interview/#q1) | 数组和链表的区别 | 扩容机制、随机访问 | 缓存局部性，为什么 LinkedList 很少用 |
+| [HashMap 原理](/posts/java/java-interview/#q2) | 数组 + 链表 + 红黑树 | 扩容、树化阈值、hash 扰动 | 1.7 并发死循环、容量规划 |
+| [ConcurrentHashMap](/posts/java/java-interview/#q3) | 线程安全 | CAS + synchronized 锁桶 | 并发扩容、size 计数 |
+| [synchronized / Lock / volatile](/posts/java/java-interview/#q5) | 会用 | 锁升级、可见性 | happens-before、锁选型 |
+| [线程池](/posts/java/java-interview/#q6) | 会创建 | 七个参数、拒绝策略 | 参数怎么定、打满时的事故处理 |
+| [AQS](/posts/java/java-interview/#q7) | — | state + CLH 队列 | 自定义同步器 |
+| [内存区域 / GC](/posts/java/java-interview/#q8) | 堆和栈 | GC 算法、收集器 | G1/ZGC 选型、GC 日志 |
+| [类加载](/posts/java/java-interview/#q10) | 加载阶段 | 双亲委派 | 打破双亲委派（SPI、Tomcat） |
+| [接口变慢 / 线程池堆积](/posts/java/java-interview/#q6) | 看日志 | jstack、Arthas 定位 | 根因、改进措施与预防 |
+| [幂等下单 / 缓存一致性](/posts/java/java-interview/#q19) | — | 唯一键、延迟双删 | 方案分级与对账 |
+
+## 深度手册
+
+- [并发编程深度面试手册](/posts/java/concurrency-handbook/)
+- [JVM 与性能调优深度面试手册](/posts/java/jvm-handbook/)
+- 上级地图：[后端面试官地图](/posts/backend/backend-interview-map/)

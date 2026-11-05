@@ -2,6 +2,7 @@
 title: TypeScript：sleep 与请求重试
 date: 2026-11-03
 summary: 用 Promise + setTimeout 实现 sleep；并给出失败等待 4 秒再重试、轮询任务状态的完整例子。
+kind: guide
 ---
 
 JS/TS 没有语言级 `sleep`，标准写法是返回 Promise，在 `async` 函数里 `await`。

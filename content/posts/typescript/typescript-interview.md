@@ -2,6 +2,7 @@
 title: TypeScript 核心面试知识点（初 / 中 / 高 + 追问）
 date: 2026-11-04
 summary: 面试官提纲：类型基础、泛型、工具类型、类型体操边界、与 React 结合，按初中高级追问定级。
+kind: qa
 ---
 
 面向**面试官**。TypeScript 题很容易变成背工具类型名词；更好的筛法是：**能否用类型表达业务约束，并在严格度和生产力之间取舍。**
@@ -214,7 +215,69 @@ function prop<T, K extends keyof T>(obj: T, key: K): T[K] {
 
 ---
 
+## 附：追问参考答案
+
+### 一、类型基础与建模
+
+- **any / unknown / never：** `any` 关闭检查，会传染，只在迁移期临时用；`unknown` 用于外部输入，必须先收窄才能使用；`never` 用于穷尽检查、不可能的分支，以及只抛异常的函数的返回值。
+- **`?` 和 `| undefined`：** `a?: T` 表示键可以不存在；`a: T | undefined` 表示键必须存在，但值可以是 undefined。开启 `exactOptionalPropertyTypes` 后，`a?: T` 不允许显式赋值 `undefined`。
+- **enum 和字面量联合：** 推荐 `as const` 对象加字面量联合。原因是不产生运行时代码，和 `isolatedModules`、类型擦除工具兼容，也不会有数字枚举那样的宽松赋值问题。
+- **可辨识联合为什么更安全：** `data?: T; error?: Error` 允许「两个都有」或「两个都没有」这种非法组合；可辨识联合让非法状态在类型上无法表示，`switch` 收窄后访问字段也是安全的。
+- **satisfies：** 只校验值符合某个类型，不会把推断结果拓宽成那个类型。适合配置对象，既保证结构正确，又保留字面量键和值。
+- **深层只读：** 内置 `Readonly` 只作用于第一层，需要递归写 `DeepReadonly`，并排除函数；如果只针对单个值，用 `as const` 更简单。
+- **跨包类型单一来源：** 类型放进独立的 `types` 包，或者从 schema 生成（OpenAPI / zod / Prisma）；业务包只引用、不复制；在 CI 里校验生成的类型和 schema 是否一致。
+
+### 二、函数、泛型与推断
+
+- **可选参数和默认参数：** 可选参数必须放在必选参数后面，类型里会带 `| undefined`；有默认值的参数在函数内部不会是 undefined，对调用方来说仍然可以不传。
+- **keyof / T[K] / extends：** `keyof T` 取出键的联合；`K extends keyof T` 约束 key 只能是合法的键；`T[K]` 是索引访问类型，让返回值跟着键变化。
+- **运行时字符串 key：** 先用守卫收窄，例如 `function isKey<T extends object>(o: T, k: PropertyKey): k is keyof T { return k in o }`，不要直接用 `as keyof T`。
+- **泛型默认值：** 用于大多数调用方不需要传泛型的 API，例如 `useState<T = undefined>`、`EventEmitter<E = Record<string, any[]>>`。
+- **分布式的坑：** `type IsNever<T> = T extends never ? true : false`，传入 never 时得到 never 而不是 true；`ToArray<string | number>` 得到的是 `string[] | number[]`。用 `[T]` 包一层可以关闭分布。详见 [类型系统原理](/posts/typescript/typescript-type-system/)。
+
+### 三、工具类型与类型编程
+
+- **Pick 还是手写 interface：** 和原类型强相关时用 `Pick` / `Omit` 派生，原类型变化会自动同步；两者语义已经独立，未来会各自演化时，就单独定义。
+- **Readonly 和 as const：** `Readonly<T>` 作用于类型，只读一层；`as const` 作用于值，会把整个字面量变成深层只读，并且保留字面量类型。
+- **全部必填并去掉 undefined：** `{ [K in keyof T]-?: Exclude<T[K], undefined> }`，或者 `Required<T>` 加 `NonNullable`。
+- **模板字面量：** 用于事件名（`on${Capitalize<K>}`）、路由参数提取、CSS 单位、i18n 键路径。见 [手写工具类型 20 题](/posts/typescript/typescript-handwritten-types/)。
+- **类型检查变慢：** 用 `--extendedDiagnostics` 和 `--generateTrace` 定位，详见 [工程化](/posts/typescript/typescript-engineering/)。
+
+### 四、收窄、断言与运行时
+
+- **as const 和 as T：** `as const` 是「更窄的推断」，安全；`as T` 是「让编译器相信我」，可能是在撒谎。
+- **各收窄手段的局限：**
+  - `typeof null` 是 `'object'`；
+  - `instanceof` 跨 iframe 会失效，而且对 interface 无效；
+  - `in` 遇到可选属性时收窄不完整；
+  - 可辨识字段需要在设计阶段就预留。
+- **JSON.parse 的结果：** 类型是 `any`，应该先当作 `unknown`，再用 zod 之类的库 `schema.parse(x)`，类型用 `z.infer<typeof schema>` 推导，让校验逻辑和类型共用一份定义。
+- **TS 不消除运行时错误：** 类型在编译后会被擦除。外部数据、`as` 断言、`any`、数组越界（没开 `noUncheckedIndexedAccess` 时），都能让编译期的类型和运行时的值不一致。
+
+### 五、与 React / 工程结合
+
+- **FC 是否推荐：** 早期的 `React.FC` 会隐式带上 `children`，对泛型组件不友好，`defaultProps` 推断也有问题。现在更推荐普通函数加 `Props` 类型。React 18 的类型去掉了隐式 `children`，但大多数团队仍然沿用普通函数写法。
+- **泛型 Table：**
+
+```tsx
+type Column<T> = { key: keyof T; title: string; render?: (row: T) => React.ReactNode }
+function Table<T extends { id: React.Key }>({ data, columns }: { data: T[]; columns: Column<T>[] }) { /* ... */ }
+```
+
+- **useRef：** `useRef<HTMLDivElement>(null)` 得到的 `.current` 是只读的 `RefObject`，供 DOM 绑定使用；`useRef<number | null>(null)` 得到可变的 `MutableRefObject`，用来存定时器 ID 之类的值。
+- **useState 推断不出来：** 例如 `useState<User | null>(null)`、`useState<string[]>([])`。空数组和 null 作为初始值时，必须显式标注类型。
+- **forwardRef 和高阶组件：** `forwardRef` 会丢失泛型，常见的解法是类型断言或 `as` 包装，React 19 起 `ref` 可以直接作为 prop 传入；高阶组件的难点在于 props 的注入和剔除（`Omit<P, Injected>`），以及透传静态属性。
+- **monorepo 共享 UI 包：** `react` 放进 `peerDependencies`，避免出现两份 React；类型入口通过 `exports.types` 暴露；用 project references 做增量构建。
+- **路径别名和 project references：** 层级很深的 import 用路径别名，同时要配好打包器；包很多、`tsc` 很慢时，上 project references。
+- **评审 `as any` 的 PR：** 先要求说明原因，再按顺序找替代方案：正确的类型 → 守卫 → `unknown` 加校验 → 最小范围的 `as`，最后才考虑 `// @ts-expect-error` 并附说明。用 ESLint 规则禁止新增 `any`，再配合 CI 统计数量，只允许下降。
+
+---
+
 ## 七、相关文章
 
 - [React 面试提纲](/posts/react/react-interview/)  
-- [Hook 与工具函数](/posts/react/hook-vs-utils/)  
+- [Hook 与工具函数](/posts/react/hook-vs-utils/)
+- [手写工具类型 20 题](/posts/typescript/typescript-handwritten-types/)  
+- [TypeScript 工程化：tsconfig、声明文件与编译链](/posts/typescript/typescript-engineering/)
+- [TypeScript 类型系统原理](/posts/typescript/typescript-type-system/)  
+- [JavaScript 基础八股与手写题](/posts/typescript/js-fundamentals-interview/)

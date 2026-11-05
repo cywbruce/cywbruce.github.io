@@ -2,6 +2,7 @@
 title: TypeScript / JavaScript 如何快速掌握：路径与深水区
 date: 2026-11-03
 summary: TS 是编译期类型层，运行时仍是 JS。深水区在事件循环、原型链、闭包、V8，以及类型体操。
+kind: guide
 ---
 
 先认清双层结构：

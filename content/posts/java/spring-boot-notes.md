@@ -2,6 +2,7 @@
 title: Spring Boot 笔记：启动与配置
 date: 2026-11-03
 summary: Java 目录下的 demo：自动配置与 application.yml 的直觉理解。
+kind: guide
 ---
 
 同样位于 `java/` 分类。地址：

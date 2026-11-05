@@ -2,6 +2,7 @@
 title: 架构师分级面试题（架构思维 · 系统设计 · 高可用）
 date: 2026-11-04
 summary: 架构师面试：初 / 中 / 高分级题目，含系统设计长答案、追问与定级。
+kind: qa
 ---
 
 面向架构师面试。设计模式见 [设计模式面试](/posts/design-patterns/patterns-interview/)。
@@ -130,3 +131,5 @@ summary: 架构师面试：初 / 中 / 高分级题目，含系统设计长答�
 **追问：** 压测数据怎么做到不污染线上？
 
 ---
+- [设计与架构深度面试手册](/posts/architect/design-architecture-handbook/)
+- [Java 架构师完全教程](/posts/architect/java-architect-guide/)

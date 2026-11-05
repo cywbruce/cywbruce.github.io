@@ -2,6 +2,7 @@
 title: Python 如何快速掌握：路径与深水区
 date: 2026-11-03
 summary: 对标 Java 知识体系学 Python：dict/list 底层、GIL、引用计数 GC、装饰器与元类。附验证写法。
+kind: guide
 ---
 
 用已会的语言当模板横向迁移，比从头背语法快：

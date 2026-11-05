@@ -2,6 +2,7 @@
 title: 前端分级面试题（浏览器 · 网络 · 工程化 · 性能）
 date: 2026-11-04
 summary: 前端面试：初 / 中 / 高分级题目，含参考答案、追问与定级。
+kind: qa
 ---
 
 面向前端面试。React / TS 专项见 [React 核心](/posts/react/react-interview/)、[TypeScript 核心](/posts/typescript/typescript-interview/)。

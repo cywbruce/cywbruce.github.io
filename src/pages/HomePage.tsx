@@ -7,6 +7,7 @@ import { usePosts } from '../content/PostsContext';
 import { LEVELS, TRACKS } from '../content/tracks';
 import { useLocale } from '../i18n/LocaleContext';
 import type { MessageKey } from '../i18n/zh';
+import { POST_KINDS } from '../content/types';
 
 function categoryLabel(id: string, t: (key: MessageKey) => string): string {
   if (id === UNCATEGORIZED_ID) {
@@ -56,6 +57,36 @@ export function HomePage() {
               </div>
             </div>
           ))}
+        </div>
+      </section>
+      <section className="module-section" aria-label={t('module.title')}>
+        <h2 className="module-section-title">{t('module.title')}</h2>
+        <div className="module-grid">
+          {POST_KINDS.map((kind) => {
+            const list = posts
+              .filter((p) => p.kind === kind)
+              .sort((a, b) => a.slug.localeCompare(b.slug));
+            if (list.length === 0) return null;
+            return (
+              <details key={kind} className={`module-card module-${kind}`}>
+                <summary className="module-card-head">
+                  <span className="module-card-name">{t(`module.${kind}` as MessageKey)}</span>
+                  <span className="module-card-count">{list.length}</span>
+                  <span className="module-card-desc">{t(`module.${kind}.desc` as MessageKey)}</span>
+                </summary>
+                {kind === 'qa' && (
+                  <Link to="/interview" className="module-card-cta">{t('module.toQuestions')}</Link>
+                )}
+                <ul className="module-card-list">
+                  {list.map((p) => (
+                    <li key={p.slug}>
+                      <Link to={`/posts/${p.slug}/`}>{p.title}</Link>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            );
+          })}
         </div>
       </section>
       <nav className="topic-portal" aria-label={t('topic.nav')}>

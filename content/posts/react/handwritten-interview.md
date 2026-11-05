@@ -2,6 +2,7 @@
 title: 前端手写题题库（含长参考答案 · 定级）
 date: 2026-11-06
 summary: 市场高频手写：防抖节流、深拷贝、Promise、发布订阅、列表树、Hooks、TS 工具类型；每题附长答案、边界与追问定级。
+kind: qa
 ---
 
 面试官用法：初级只要求「主路径能跑」；中级看边界与复杂度；高级看 API 设计、可取消、类型与可测试性。下面答案偏**阅卷版**，可直接对照打分。
@@ -10,9 +11,9 @@ summary: 市场高频手写：防抖节流、深拷贝、Promise、发布订阅�
 
 ---
 
-## 一、防抖 debounce（必考）
+## 一、防抖 debounce（初级～中级）
 
-**题面：** 实现 `debounce(fn, delay)`，支持取消；追问立即执行版。
+**主问：** 实现 `debounce(fn, delay)`，支持取消；追问立即执行版。
 
 ### 长参考答案
 
@@ -65,9 +66,9 @@ function debounce(fn, delay = 300, { immediate = false } = {}) {
 
 ---
 
-## 二、节流 throttle
+## 二、节流 throttle（初级～中级）
 
-**题面：** 时间戳版或定时器版，说明差异。
+**主问：** 时间戳版或定时器版，说明差异。
 
 ### 长参考答案（时间戳 + 尾调用简化）
 
@@ -112,9 +113,9 @@ function throttle(fn, wait = 300) {
 
 ---
 
-## 三、深拷贝 deepClone（高频坑题）
+## 三、深拷贝 deepClone（中级）
 
-**题面：** 支持普通对象/数组；加分：循环引用、`Date`/`RegExp`/`Map`/`Set`。
+**主问：** 支持普通对象/数组；加分：循环引用、`Date`/`RegExp`/`Map`/`Set`。
 
 ### 长参考答案
 
@@ -164,7 +165,9 @@ function deepClone(input, map = new WeakMap()) {
 
 ## 四、Promise.all / race / allSettled
 
-### Promise.all（长答案）
+### Promise.all（中级）
+
+**主问：** 手写 `Promise.all`：保持结果顺序，任一失败立即 reject，空数组直接 resolve。
 
 ```js
 function promiseAll(iterable) {
@@ -189,7 +192,9 @@ function promiseAll(iterable) {
 }
 ```
 
-### allSettled（中级加分）
+### allSettled（中级）
+
+**主问：** 手写 `Promise.allSettled`，并说明它和 `Promise.all` 的语义差别。
 
 ```js
 function promiseAllSettled(iterable) {
@@ -207,7 +212,9 @@ function promiseAllSettled(iterable) {
 
 ---
 
-## 五、发布订阅 EventEmitter
+## 五、发布订阅 EventEmitter（中级）
+
+**主问：** 实现一个 EventEmitter，支持 `on` / `off` / `once` / `emit`。
 
 ```js
 class EventEmitter {
@@ -246,7 +253,9 @@ class EventEmitter {
 
 ## 六、列表 ↔ 树（业务高频）
 
-### 列表转树
+### 列表转树（初级～中级）
+
+**主问：** 把带 `id` / `parentId` 的扁平列表转成树，要求 O(n)。
 
 ```js
 function listToTree(list, { id = 'id', parentId = 'parentId', children = 'children' } = {}) {
@@ -267,7 +276,9 @@ function listToTree(list, { id = 'id', parentId = 'parentId', children = 'childr
 }
 ```
 
-### 树转列表（可选）
+### 树转列表（中级）
+
+**主问：** 把树形结构拍平成带 `parentId` 的列表。
 
 ```js
 function treeToList(tree, { children = 'children' } = {}) {
@@ -288,7 +299,9 @@ function treeToList(tree, { children = 'children' } = {}) {
 
 ---
 
-## 七、lodash.get / 模板字符串
+## 七、lodash.get / 模板字符串（初级～中级）
+
+**主问：** 实现 `get(obj, path, defaultValue)`，支持 `a.b[0].c` 这样的路径。
 
 ```js
 function get(obj, path, defaultValue) {
@@ -312,7 +325,9 @@ function get(obj, path, defaultValue) {
 
 ## 八、React 手写：usePrevious / useDebounceValue
 
-### usePrevious
+### usePrevious（中级）
+
+**主问：** 实现 `usePrevious(value)`，返回上一次渲染时的值。
 
 ```js
 function usePrevious(value) {
@@ -324,7 +339,9 @@ function usePrevious(value) {
 }
 ```
 
-### useDebouncedValue（面试更常考）
+### useDebouncedValue（中级）
+
+**主问：** 实现 `useDebouncedValue(value, delay)`，值停止变化 delay 毫秒后才更新。
 
 ```js
 function useDebouncedValue(value, delay = 300) {
@@ -345,7 +362,7 @@ function useDebouncedValue(value, delay = 300) {
 
 ## 九、React 手写：简易 useRequest（中高级）
 
-**题面：** `const { data, loading, error, run } = useRequest(fetcher)`，切换参数要防竞态。
+**主问：** `const { data, loading, error, run } = useRequest(fetcher)`，切换参数要防竞态。
 
 ### 长参考答案
 
@@ -395,7 +412,9 @@ function useRequest(fetcher, { manual = false, defaultParams } = {}) {
 
 ---
 
-## 十、TypeScript 工具类型手写
+## 十、TypeScript 工具类型手写（中级）
+
+**主问：** 手写 `Partial`、`Pick`、`Omit`、`ReturnType`、`DeepReadonly`。
 
 ```ts
 type MyPartial<T> = { [K in keyof T]?: T[K] }

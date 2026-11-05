@@ -1,8 +1,8 @@
 ---
 title: Java 后端转 AI 工程面试题（LLM · RAG · Agent · MCP 串讲）
 date: 2026-11-05
-interview: false
 summary: 用一条电商客服链路串讲 LLM、向量、RAG、Tool、Skills、MCP、Agent，再加 Java 工程治理；20 题分级，含答案、追问与定级。
+kind: qa
 ---
 
 面向**想转 AI 应用方向的 Java 后端**。面试官最爱问的一题是「把这些概念串起来讲一遍」，本篇就以这道题为主线来组织。

@@ -2,6 +2,7 @@
 title: React Hooks 高频追问清单（定级用）
 date: 2026-11-05
 summary: 围绕 useState / useEffect / useMemo / 自定义 Hook 的追问树，方便面试中快速加压与定级。
+kind: qa
 ---
 
 配合 [React 核心面试知识点](/posts/react/react-interview/) 使用。下面每条是「主问 → 追问链」，按候选人回答往下挖。
@@ -18,6 +19,13 @@ summary: 围绕 useState / useEffect / useMemo / 自定义 Hook 的追问树，�
 | 中 | 在 `setTimeout` / Promise 里 setState，还批量吗？（视 React 版本） | 18 自动批处理意识 |
 | 高 | 能举例「必须刷新读到最新 state」的场景吗？如何做？ | flushSync 慎用、或结构调整 |
 
+**参考答案：**
+
+- **表现上像异步：** `setState` 不会立刻修改当前渲染里的变量，而是排入更新队列，下一次渲染才能读到新值。
+- **批处理：** React 17 只在合成事件里批量更新；React 18 用 `createRoot` 后做**自动批处理**，`setTimeout`、Promise、原生事件里的多次 setState 也会合并成一次渲染。
+- **函数式更新：** `setX(x => x + 1)` 基于队列里最新的值计算。连续调用 3 次就加 3；写成 `setX(x + 1)` 时，3 次读到的都是同一个闭包旧值，只加 1。
+- **必须立刻读到最新值：** 比如更新列表后马上滚动到新的一项。可以用 `flushSync(() => setList(...))` 强制同步提交，但会打断批处理，影响性能，要慎用。更好的做法是把逻辑放进 `useLayoutEffect`，或者直接用计算出来的新值，不去读 state。
+
 **定级：** 只知道「异步」口头禅偏初级；能讲清批处理与函数式更新 → 中级。
 
 ---
@@ -32,6 +40,14 @@ summary: 围绕 useState / useEffect / useMemo / 自定义 Hook 的追问树，�
 | 中 | 如何避免请求竞态？ | abort / 忽略过期 |
 | 中 | props → state 的 Effect 同步为何常被劝退？ | 重复源、中间态 |
 | 高 | 「Effect 编排整个业务流」如何重构？ | 事件驱动、查询库、派生 |
+
+**参考答案：**
+
+- **依赖怎么定：** effect 里用到的、会变化的值（props、state、组件内的函数）都要写进依赖，以 `exhaustive-deps` 规则为准。漏写会读到过期闭包，多写会导致不必要的重复执行。不想让函数引起重跑，就把函数移进 effect 内部，或者用 `useCallback`、`useEffectEvent` 稳定它。
+- **清理时机：** 下一次 effect 执行前，以及组件卸载时。开发模式下严格模式会额外执行一次「挂载 → 清理 → 挂载」，用来检查清理逻辑写得对不对。
+- **请求竞态：** 在 effect 里创建 `AbortController`，清理时调用 `abort()`；或者用 `let ignore = false` 标记，清理时设为 true，响应回来时忽略过期结果。
+- **为什么不建议用 Effect 把 props 同步到 state：** 会产生两份数据来源，还会多渲染一次中间状态。应该在渲染时直接派生；需要「props 变化时重置」的场景，用 `key` 重建组件。
+- **用 Effect 编排整个业务流：** 改成在事件处理函数里直接执行业务逻辑；服务端数据交给 React Query / SWR；能从已有数据算出来的值直接派生，不再用 effect 串联。
 
 **定级：** 能独立讲竞态与清理 → 至少中级。
 
@@ -50,6 +66,16 @@ summary: 围绕 useState / useEffect / useMemo / 自定义 Hook 的追问树，�
 
 ---
 
+**参考答案：**
+
+- **缓存什么：** `useMemo` 缓存计算结果，`useCallback` 缓存函数引用，`React.memo` 在 props 浅比较相等时跳过组件重新渲染。
+- **不是越多越快：** 比较依赖本身有成本，代码也更难读。它们只在两种情况下有收益：计算确实昂贵，或者需要给 `memo` 子组件、effect 依赖提供稳定的引用。
+- **memo 失效：** 父组件每次渲染都传新的对象、数组、内联函数，或者传了 `children`（JSX 每次都是新对象）；Context 值一变化，所有消费者也都会重新渲染。
+- **怎么证明有收益：** 用 React DevTools Profiler 录制，对比优化前后的 commit 耗时和渲染次数；看到问题再优化，不要提前优化。
+- **React Compiler：** 开启后编译器会自动做 memo，大部分手写的 `useMemo`、`useCallback` 都可以删掉。但前提是代码遵守 React 规则（纯渲染、不修改 props 和 state），所以理解这些规则仍然重要。
+
+---
+
 ## useRef（中级）
 
 **主问：** `useRef` 和 `useState` 怎么选？
@@ -62,6 +88,15 @@ summary: 围绕 useState / useEffect / useMemo / 自定义 Hook 的追问树，�
 
 ---
 
+**参考答案：**
+
+- **怎么选：** 需要触发重新渲染的数据用 `useState`；只是跨渲染保存、不影响 UI 的值用 `useRef`，比如定时器 ID、上一次的值、DOM 节点。
+- **改 `ref.current` 为什么不重新渲染：** ref 是一个普通的可变对象，React 不追踪它的变化。
+- **保存最新回调的 ref 模式：** `ref.current = callback`，订阅只建立一次，回调触发时读 `ref.current`。这样既不用频繁重新订阅，又能读到最新的 props 和 state。React 新版本里的 `useEffectEvent` 就是这个模式的官方方案。
+- **严格模式下的双重调用：** ref 回调和 effect 会执行两次「挂载 → 清理」，所以挂载逻辑要幂等，清理要彻底。React 19 起，ref 回调可以直接返回一个清理函数。
+
+---
+
 ## 自定义 Hook（中高级）
 
 **主问：** 判断下面该不该做成 Hook：本地存储同步、金额格式化、WebSocket 订阅。
@@ -71,6 +106,20 @@ summary: 围绕 useState / useEffect / useMemo / 自定义 Hook 的追问树，�
 | 初 | 命名必须 `use` 吗？ | 约定 + lint |
 | 中 | Hook 里能否再调多个 Hook？规则是什么？ | 顶层、稳定顺序 |
 | 高 | 开源一个 Hook 库，API 兼容与测试你怎么做？ | 纯逻辑抽取、SSR 安全 |
+
+**参考答案：**
+
+- **该不该做成 Hook：**
+  - 本地存储同步：**是**。它需要 state 加 `storage` 事件监听。
+  - 金额格式化：**否**。纯函数，写成工具函数就行。
+  - WebSocket 订阅：**是**。连接和清理都要跟组件的生命周期绑定。
+- **命名为什么要用 `use` 开头：** 这是约定，ESLint 靠这个前缀来检查 Hooks 规则，React 也靠它识别 Hook。
+- **Hook 里能不能调用其他 Hook：** 可以，但必须在顶层调用，每次渲染的调用顺序要一致，不能写在条件、循环或嵌套函数里。
+- **开源一个 Hook 库要注意什么：**
+  - 核心逻辑抽成纯函数，方便测试；
+  - 用 `@testing-library/react` 的 `renderHook` 测试 Hook；
+  - 保证 SSR 安全，不在渲染阶段访问 `window`；
+  - 按语义化版本发布，API 变更时提供兼容层和迁移文档。
 
 更多对比见 [Hook 与工具函数](/posts/react/hook-vs-utils/)。
 

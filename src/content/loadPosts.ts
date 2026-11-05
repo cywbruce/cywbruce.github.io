@@ -3,7 +3,7 @@ import { extname, join, relative, sep } from 'node:path';
 import matter from 'gray-matter';
 import { marked } from 'marked';
 import { decorateHeadingIds } from './toc';
-import type { Post } from './types';
+import { POST_KINDS, type Post, type PostKind } from './types';
 
 export const DEFAULT_POSTS_DIR = 'content/posts';
 
@@ -85,6 +85,9 @@ function parsePostFile(rootDir: string, filePath: string): Post {
   }
   if (data.interview === false) {
     post.interview = false;
+  }
+  if (typeof data.kind === 'string' && (POST_KINDS as string[]).includes(data.kind)) {
+    post.kind = data.kind as PostKind;
   }
   return post;
 }

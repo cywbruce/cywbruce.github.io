@@ -803,3 +803,18 @@ pre {
 .roadmap-levels { display: flex; flex-wrap: wrap; gap: 0.35rem; }
 .roadmap-levels .level-badge { text-decoration: none; font-size: 0.85em; padding: 0.35em 0.7em; }
 .roadmap-levels .level-badge:hover { filter: brightness(1.1); }
+
+/* ---- 内容模块分区 ---- */
+.module-section { margin: 0 0 1.8rem; }
+.module-section-title { margin: 0 0 0.8rem; font-size: 1.15rem; }
+.module-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.75rem; align-items: start; }
+.module-card { padding: 0.8rem 0.9rem; border: 1px solid rgba(128,128,128,0.25); border-radius: 12px; }
+.module-card[open] { grid-column: 1 / -1; }
+.module-card-head { display: grid; grid-template-columns: 1fr auto; gap: 0.25rem 0.75rem; cursor: pointer; list-style: none; }
+.module-card-head::-webkit-details-marker { display: none; }
+.module-card-name { font-weight: 600; }
+.module-card-count { color: var(--muted); }
+.module-card-desc { grid-column: 1 / -1; font-size: 0.88em; color: var(--muted); }
+.module-card-cta { display: inline-block; margin: 0.6rem 0 0; font-size: 0.9em; }
+.module-card-list { margin: 0.6rem 0 0; padding-left: 1.1rem; columns: 2 260px; column-gap: 1.5rem; }
+.module-card-list li { break-inside: avoid; margin: 0.2rem 0; }

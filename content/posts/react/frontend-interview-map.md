@@ -2,6 +2,7 @@
 title: 前端面试官地图：React + TypeScript 怎么问
 date: 2026-11-06
 summary: 总览篇：按初 / 中 / 高级组卷，链到手写题、场景题、市场高频长答案与专题提纲。
+kind: map
 ---
 
 本目录放前端向面试材料。你是**面试官**时，先定级别目标，再挑专题，不要一轮塞满所有题。
@@ -53,10 +54,26 @@ summary: 总览篇：按初 / 中 / 高级组卷，链到手写题、场景题�
 | [手写题题库](/posts/react/handwritten-interview/) | 防抖/深拷贝/Promise/Hooks/TS 工具类型 |
 | [场景题题库](/posts/react/scenario-interview/) | 业务场景长答案 + 定级 |
 | [React 核心知识点](/posts/react/react-interview/) | React 主提纲 + 追问 |
-| [TypeScript 核心知识点](/posts/typescript/typescript-interview/) | TS 主提纲 + 追问 |
+| [TypeScript 面试官地图](/posts/typescript/typescript-interview-map/) | TS 方向子地图（类型系统 / 手写 / 工程化 / JS 基础） |
+| [TypeScript 核心知识点](/posts/typescript/typescript-interview/) | TS 主提纲 + 追问 + 答案 |
 | [Hooks 高频追问](/posts/react/hooks-followups/) | 单点加压 |
 | [Hook vs 工具函数](/posts/react/hook-vs-utils/) | 概念 / 设计题 |
 | [React vs Vue](/posts/react/react-vs-vue/) | 双端经验与选型 |
+
+## 追问链（React 主线）
+
+| 主问 | 初级期望 | 中级追问 | 高级追问 | 答案 |
+| --- | --- | --- | --- | --- |
+| 渲染与更新模型 | setState 触发渲染 | Fiber、批处理、diff 和 key | 并发渲染、Transition | [React 提纲 · 一](/posts/react/react-interview/#sec-1) · [市场高频](/posts/react/market-hot-questions/) |
+| Hooks | useState、useEffect | 依赖、竞态、过期闭包 | 自定义 Hook 设计、React Compiler | [React 提纲 · 二](/posts/react/react-interview/#sec-2) · [Hooks 追问](/posts/react/hooks-followups/) |
+| 性能 | memo 是什么 | memo 失效、虚拟列表 | Profiler 量化、CWV | [React 提纲 · 三](/posts/react/react-interview/#sec-3) |
+| 状态管理 | 状态提升、Context | Query 和 Store 的分工 | 状态分层与治理 | [React 提纲 · 四](/posts/react/react-interview/#sec-4) |
+| 组件与工程 | props 设计 | 受控 / 非受控、组合 | 设计系统、微前端 | [React 提纲 · 五](/posts/react/react-interview/#sec-5) · [场景题](/posts/react/scenario-interview/) |
+| 手写 | 防抖 | 深拷贝、Promise.all | useRequest 竞态、并发池 | [手写题](/posts/react/handwritten-interview/) |
+| TypeScript | props 标注 | 联合类型、泛型 | 工程化、类型系统 | [TS 地图](/posts/typescript/typescript-interview-map/) |
+| 浏览器 / 网络 | 输入 URL 后发生什么 | 缓存、跨域 | 性能与安全 | [前端分级题](/posts/frontend/frontend-tiered-interview/) |
+
+面经：[大厂前端模拟面经](/posts/frontend/bigtech-frontend-mock-interview/)
 
 ## 记录表（建议面试时打勾）
 

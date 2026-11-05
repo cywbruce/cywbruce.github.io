@@ -2,6 +2,7 @@
 title: JVM 垃圾回收入门
 date: 2026-11-02
 summary: Java 目录下的 demo：GC 在干什么、常见收集器名字扫一眼。
+kind: guide
 ---
 
 放在 `content/posts/java/` 下的文章，URL 会是：

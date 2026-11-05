@@ -2,6 +2,7 @@
 title: React Hook 与工具函数的区别（面试官版）
 date: 2026-11-03
 summary: 用「状态 / 生命周期 / 渲染」三条线区分 Hook 与工具函数，并附初中高级追问，方便快速定级。
+kind: qa
 ---
 
 面试时很多人会背「Hook 以 `use` 开头」，却说不清它和普通工具函数的本质差异。本题用来筛：候选人是否真正理解 React 的状态与渲染模型。
@@ -81,6 +82,13 @@ function useData(url) {
 2. 工具函数里写 `useState` 会怎样？  
 3. `formatDate` 要不要做成 Hook？
 
+**参考答案：**
+
+- Hook 能调用其他 Hook，把状态、副作用接入组件的渲染周期；普通函数做不到。`use` 前缀是约定，ESLint 靠它检查 Hooks 规则。
+- **能不能在 `if` 里写 `useState`：** 不能。React 按**调用顺序**把 state 对应到组件内部的链表，条件调用会让顺序错位。
+- **工具函数里写 `useState`：** 如果这个函数是在组件渲染时调用的，它实际上就成了一个没有 `use` 前缀的 Hook，lint 检查不到，非常容易出错；如果在事件处理或组件外调用，会直接报错（Invalid hook call）。
+- **`formatDate` 要不要做成 Hook：** 不要。纯计算，不涉及状态，写成工具函数就行。
+
 **定级信号：** 答出「规则 + 简单场景选型」即可过初级。
 
 ### 中级
@@ -95,6 +103,30 @@ function useData(url) {
 2. 防抖是做成 `debounce(fn)` 还是 `useDebouncedValue`？两者如何组合？  
 3. 自定义 Hook 返回 `[value, setValue]` 和返回对象，各有什么利弊？
 
+**参考答案：**
+
+- **判断标准：** 是否需要 React 的状态、副作用或生命周期。需要就写 Hook，不需要就写工具函数。
+- **`useUser(userId)`：**
+
+```ts
+function useUser(userId: string) {
+  const [state, setState] = useState<{ data?: User; loading: boolean; error?: Error }>({ loading: true })
+  useEffect(() => {
+    const ac = new AbortController()
+    setState({ loading: true })
+    fetch(`/api/users/${userId}`, { signal: ac.signal })
+      .then(r => r.json())
+      .then(data => setState({ data, loading: false }))
+      .catch(e => { if (e.name !== 'AbortError') setState({ error: e, loading: false }) })
+    return () => ac.abort() // userId 变化或卸载时取消旧请求，避免竞态
+  }, [userId])
+  return state
+}
+```
+
+- **防抖：** `debounce(fn)` 是工具函数；`useDebouncedValue(value, ms)` 是 Hook，内部用 effect 加定时器。组合方式是在 Hook 里用 `useMemo` 包住 `debounce`，卸载时调用 `cancel()`。
+- **返回数组还是对象：** 返回数组 `[value, setValue]` 方便调用方自定义命名，适合只有一两个返回值的情况；返回对象字段名固定，方便扩展，适合返回值多的情况。
+
 **定级信号：** 能讲竞态、依赖数组、返回值 API 设计 → 中级。
 
 ### 高级
@@ -108,5 +140,12 @@ function useData(url) {
 1. Hook 里放模块级单例（如全局 socket）有什么隐患？如何正确抽象？  
 2. 自定义 Hook 导致「隐形重渲染」时你怎么排查？  
 3. 和 Vue composable 对比，React Hook 的约束多在哪里？
+
+**参考答案：**
+
+- **治理「伪 Hook」：** 用 lint 找出名字以 `use` 开头但内部没调用任何 Hook 的函数，改名成普通工具函数。代码评审时明确分层：纯逻辑放 `utils`；组件级的状态和副作用写成 Hook；跨组件树共享用 Context；全局、高频更新的状态放外部 store（Zustand、Redux 等）；服务端数据交给 React Query。
+- **Hook 里放模块级单例（比如全局 socket）：** 多个组件会共享同一个实例，生命周期不受组件控制，测试之间会互相污染，SSR 时还会在不同请求间泄漏数据。正确的抽象是做成一个服务对象，组件里用 Hook 订阅和退订，由引用计数决定什么时候断开连接。
+- **排查「隐形重渲染」：** 用 Profiler 的 "why did this render"，重点查 Hook 每次都返回新对象或新函数的情况；用 `useMemo` 稳定返回值，或者把状态拆细。
+- **和 Vue composable 对比：** Vue 的 `setup` 只执行一次，响应式自动追踪依赖，没有调用顺序限制，也没有过期闭包问题。React 的 Hook 每次渲染都会重新执行，要手动维护依赖数组，还要遵守调用顺序规则。
 
 **定级信号：** 能从架构、可维护性、性能边界谈，而不是只背对比表 → 高级。
