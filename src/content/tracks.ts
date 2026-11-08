@@ -20,6 +20,7 @@ const CATEGORY_TRACK: Record<string, Track> = {
   backend: 'backend',
   'design-patterns': 'architect',
   architect: 'architect',
+  'system-design': 'architect',
   ai: 'ai',
   llm: 'ai',
 };

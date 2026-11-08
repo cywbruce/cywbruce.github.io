@@ -42,6 +42,8 @@ export const zh = {
   'module.handbook.desc': '原理、方案对比、生产踩坑的长文，系统学习用',
   'module.guide': '学习与经验',
   'module.guide.desc': '学习路线、深水区、资料与实战经验',
+  'module.primer': '系统设计入门',
+  'module.primer.desc': '整理自 system-design-primer：基础知识、估算、系统设计题、面向对象设计题、阅读清单',
   'module.toQuestions': '去题库刷题 →',
   'notFound.title': '页面不存在',
   'lang.zh': '中文',

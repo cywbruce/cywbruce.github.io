@@ -45,6 +45,8 @@ export const en: Record<MessageKey, string> = {
   'module.handbook.desc': 'Long-form deep dives: principles, trade-offs, production pitfalls',
   'module.guide': 'Guides & notes',
   'module.guide.desc': 'Roadmaps, deep-water notes, resources and practice',
+  'module.primer': 'System design primer',
+  'module.primer.desc': 'Adapted from system-design-primer: fundamentals, estimation, design & OOD questions, reading list',
   'module.toQuestions': 'Drill questions →',
   'notFound.title': 'Page not found',
   'lang.zh': '中文',

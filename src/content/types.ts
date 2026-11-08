@@ -1,6 +1,6 @@
 /** 内容模块：深度手册 / 面试官地图 / 题目与答案 / 学习与经验 */
-export type PostKind = 'handbook' | 'map' | 'qa' | 'guide';
-export const POST_KINDS: PostKind[] = ['map', 'qa', 'handbook', 'guide'];
+export type PostKind = 'handbook' | 'map' | 'qa' | 'guide' | 'primer';
+export const POST_KINDS: PostKind[] = ['map', 'qa', 'handbook', 'guide', 'primer'];
 
 export interface Post {
   /** Path under content/posts without .md, e.g. `hello-blog` or `java/jvm-gc`. */

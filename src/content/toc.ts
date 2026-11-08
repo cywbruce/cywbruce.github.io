@@ -56,7 +56,10 @@ export function slugifyHeading(text: string): string {
 export function headingIdFor(level: number, text: string): string {
   const plain = decodeEntities(text).trim();
   if (level === 3) {
-    const m = plain.match(/^(\d+)[.、．]\s*/);
+    // 小节编号「1.1 用例」「3.2.1 xxx」→ `s1-1` / `s3-2-1`（不是题号）
+    const sub = plain.match(/^(\d+(?:\.\d+)+)(?=[\s.、．]|$)/);
+    if (sub) return `s${sub[1].replace(/\./g, '-')}`;
+    const m = plain.match(/^(\d+)[.、．](?!\d)\s*/);
     if (m) return `q${m[1]}`;
   }
   if (level === 2) {

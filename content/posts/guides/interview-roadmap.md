@@ -27,10 +27,11 @@ kind: map
 
 ## 深度手册
 
-[分布式](/posts/backend/distributed-systems-handbook/) · [缓存](/posts/redis/redis-handbook/) · [消息队列](/posts/mq/mq-handbook/) · [数据库](/posts/mysql/mysql-handbook/) · [JVM](/posts/java/jvm-handbook/#q5) · [并发](/posts/java/concurrency-handbook/) · [Spring](/posts/spring/spring-handbook/#q2) · [设计与架构](/posts/architect/design-architecture-handbook/) · [Java 架构师教程](/posts/architect/java-architect-guide/)
+[分布式](/posts/backend/distributed-systems-handbook/) · [缓存](/posts/redis/redis-handbook/) · [消息队列](/posts/mq/mq-handbook/) · [数据库](/posts/mysql/mysql-handbook/) · [JVM](/posts/java/jvm-handbook/) · [并发](/posts/java/concurrency-handbook/) · [Spring](/posts/spring/spring-handbook/) · [设计与架构](/posts/architect/design-architecture-handbook/) · [Java 架构师教程](/posts/architect/java-architect-guide/)
 
 ## 系统设计
 
+- [系统设计入门模块](/posts/system-design/overview/)：基础知识、估算、经典设计题、面向对象设计题、阅读清单（整理自 system-design-primer）
 - [系统设计场景题库](/posts/architect/system-design-interview/)：统一答题框架、10 道高频题、全站系统设计题索引
 
 ## 真实面经

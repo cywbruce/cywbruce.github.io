@@ -59,3 +59,7 @@ kind: map
 | 题目与答案 | [系统设计题库](/posts/architect/system-design-interview/) · [架构师分级题](/posts/architect/architect-tiered-interview/) · [模拟面经](/posts/architect/architect-mock-interview/) · [设计模式题](/posts/design-patterns/patterns-interview/) |
 | 深度手册 | [设计与架构手册](/posts/architect/design-architecture-handbook/) · [Java 架构师完全教程](/posts/architect/java-architect-guide/) · [分布式系统手册](/posts/backend/distributed-systems-handbook/) |
 | 子地图 | [设计模式地图](/posts/design-patterns/patterns-interview-map/) · [后端地图](/posts/backend/backend-interview-map/) |
+
+## 系统设计入门模块
+
+- [导读](/posts/system-design/overview/) · [基础知识](/posts/system-design/fundamentals/) · [估算](/posts/system-design/estimation/) · [设计题](/posts/system-design/design-questions/) · [面向对象设计题](/posts/system-design/ood-questions/) · [题解代码](/posts/system-design/solutions-code/) · [题解拆解](/posts/system-design/solutions-walkthrough/) · [阅读清单](/posts/system-design/reading-list/)

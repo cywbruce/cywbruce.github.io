@@ -275,6 +275,7 @@ return ok and 1 or 0
 
 ## 相关文章
 
+- [系统设计入门模块（primer）](/posts/system-design/overview/)
 - [架构师面试官地图](/posts/architect/architect-interview-map/)
 - [设计与架构深度手册](/posts/architect/design-architecture-handbook/)
 - [分布式系统深度手册](/posts/backend/distributed-systems-handbook/)

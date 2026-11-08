@@ -24,6 +24,17 @@ describe('decorateHeadingIds / extractToc', () => {
     expect(html).toContain('id="sec-12"');
   });
 
+  it('uses s-prefixed ids for numbered subsections, not question ids', () => {
+    const html = decorateHeadingIds(
+      '<h2>一、推特</h2><h3>1.1 用例</h3><h3>1.2 约束与估算</h3><h3>3.2.1 细节</h3><h3>7. 积压（中级）</h3>',
+    );
+    expect(html).toContain('id="s1-1"');
+    expect(html).toContain('id="s1-2"');
+    expect(html).toContain('id="s3-2-1"');
+    expect(html).toContain('id="q7"');
+    expect(html).not.toContain('id="q1"');
+  });
+
   it('dedupes repeated headings with the parent section', () => {
     const html = decorateHeadingIds(
       '<h2>一、渲染</h2><h3>初级</h3><h2>二、Hooks</h2><h3>初级</h3><h3>初级</h3>',
