@@ -787,6 +787,53 @@ pre {
     --border: #a8a29e;
   }
 
+  /* Kindle e-ink optimizations */
+  @media (monochrome) or (pointer: none) {
+    :root {
+      font-size: 18px;
+      --bg: #fff;
+      --fg: #000;
+      --muted: #333;
+      --border: #666;
+      --border-strong: #444;
+      --accent: #000;
+    }
+
+    .site-header {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      background: #fff;
+    }
+
+    .roadmap-hero,
+    .module-card,
+    .roadmap-card {
+      background: #fff;
+      border-color: #666;
+    }
+
+    .level-badge {
+      color: #000;
+      background: #fff;
+      border-color: #000;
+    }
+
+    .level-badge.level-junior,
+    .level-badge.level-mid,
+    .level-badge.level-senior {
+      background: #fff;
+      color: #000;
+    }
+
+    pre {
+      background: #f5f5f5;
+    }
+
+    a {
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0.2);
+    }
+  }
+
   html {
     scroll-behavior: auto;
   }
@@ -1100,3 +1147,44 @@ pre {
 .module-card-cta { display: inline-block; margin: 0.6rem 0 0; font-size: 0.9em; }
 .module-card-list { margin: 0.6rem 0 0; padding-left: 1.1rem; columns: 2 260px; column-gap: 1.5rem; }
 .module-card-list li { break-inside: avoid; margin: 0.2rem 0; }
+
+/* ---- Kindle reading notice ---- */
+.kindle-notice {
+  margin: 0 0 1rem;
+  padding: 0.75rem 1rem;
+  background: rgba(15, 118, 110, 0.08);
+  border-left: 3px solid var(--accent);
+  border-radius: 0.25rem;
+}
+
+.kindle-notice-text {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.kindle-notice-link {
+  display: inline-block;
+  margin-left: 0.25rem;
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .kindle-notice {
+    margin: 0 0 0.75rem;
+    padding: 0.6rem 0.85rem;
+    background: #fff;
+    border: 1.5px solid var(--border-strong);
+  }
+
+  .kindle-notice-text {
+    font-size: 0.9rem;
+  }
+
+  @media (monochrome) or (pointer: none) {
+    .kindle-notice {
+      background: #f5f5f5;
+      border-color: #666;
+    }
+  }
+}

@@ -31,6 +31,14 @@ export function HomePage() {
 
   return (
     <section className="home">
+      <section className="kindle-notice" aria-label="阅读指南">
+        <p className="kindle-notice-text">
+          📖 本站针对 Kindle 浏览器优化。
+          <Link to="/posts/guides/kindle-reading-guide/" className="kindle-notice-link">
+            查看阅读指南 →
+          </Link>
+        </p>
+      </section>
       <section className="roadmap-hero" aria-label={t('roadmap.title')}>
         <header className="roadmap-hero-head">
           <h2 className="roadmap-hero-title">{t('roadmap.title')}</h2>

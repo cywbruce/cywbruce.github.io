@@ -2,6 +2,14 @@
 
 个人 Markdown 博客（Vite + React 静态站），发布至 GitHub Pages。
 
+## 针对 Kindle 优化
+
+本站针对 Kindle 浏览器进行了专门优化：
+- 适配 e-ink 屏幕的字体和配色
+- 简化动画效果，减少刷新闪烁
+- 提供清晰的阅读顺序指引
+- [查看 Kindle 阅读指南](/posts/guides/kindle-reading-guide/)
+
 ## 新增文章
 
 在 `content/posts/` 下新增 `*.md` 文件；也可用**子目录分类**，例如 Java 相关：
