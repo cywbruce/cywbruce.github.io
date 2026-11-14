@@ -42,6 +42,13 @@ function Chip({ active, label, count, onClick }: ChipProps) {
       aria-selected={active}
       className={active ? 'interview-filter is-active' : 'interview-filter'}
       onClick={onClick}
+      onTouchStart={(e) => {
+        // Provide immediate feedback on Kindle
+        e.currentTarget.style.transform = 'scale(0.95)';
+      }}
+      onTouchEnd={(e) => {
+        e.currentTarget.style.transform = '';
+      }}
     >
       {label}
       <span className="interview-filter-count">{count}</span>

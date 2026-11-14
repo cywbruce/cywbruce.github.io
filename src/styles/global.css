@@ -1188,3 +1188,159 @@ pre {
     }
   }
 }
+
+/* ---- Kindle touch optimization ---- */
+@media (monochrome) or (pointer: none) or (max-width: 640px) {
+  /* 增大所有链接的点击区域 */
+  a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 0.25rem;
+    margin: -0.5rem -0.25rem;
+    position: relative;
+  }
+
+  /* 列表项链接更明显 */
+  .post-list-card,
+  .interview-link,
+  .topic-portal-item {
+    min-height: 56px;
+    padding: 1rem 0.5rem;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+
+  .post-list-card:active,
+  .interview-link:active,
+  .topic-portal-item:active {
+    border-left-color: var(--accent);
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  /* 按钮样式优化 */
+  .site-nav > a,
+  .nav-drawer-trigger,
+  .nav-drawer-close,
+  .lang-switch button,
+  .interview-filter,
+  .post-back a,
+  .post-category,
+  .level-badge {
+    min-height: 48px;
+    min-width: 48px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-weight: 700;
+    border-width: 2px;
+  }
+
+  /* 模块卡片优化 */
+  .module-card-head {
+    min-height: 56px;
+    padding: 1rem 0.5rem;
+    border-left: 4px solid transparent;
+  }
+
+  .module-card[open] .module-card-head {
+    border-left-color: var(--accent);
+    background: rgba(0, 0, 0, 0.03);
+  }
+
+  /* 路线卡片优化 */
+  .roadmap-card {
+    padding: 1rem;
+    border-left: 4px solid transparent;
+  }
+
+  .roadmap-card:active {
+    border-left-color: var(--accent);
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  .roadmap-card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    min-height: 48px;
+    padding: 0.5rem 0;
+  }
+
+  .roadmap-levels .level-badge {
+    min-height: 40px;
+    min-width: auto;
+    padding: 0.5rem 0.75rem;
+    margin: 0.25rem;
+  }
+
+  /* 抽屉导航优化 */
+  .nav-drawer-toc-item a,
+  .nav-drawer-post,
+  .nav-drawer-topic-summary {
+    min-height: 52px;
+    padding: 0.75rem 0.5rem;
+    border-left: 3px solid transparent;
+  }
+
+  .nav-drawer-toc-item a:active,
+  .nav-drawer-post:active {
+    border-left-color: var(--accent);
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  /* 面试题目优化 */
+  .interview-question {
+    font-size: 1.05rem;
+    line-height: 1.5;
+  }
+
+  /* 文章内链接优化 */
+  .post-body a {
+    padding: 0.25rem 0.15rem;
+    margin: -0.25rem -0.15rem;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.2em;
+  }
+
+  /* 阅读指南提示优化 */
+  .kindle-notice {
+    padding: 1rem;
+    border-left-width: 4px;
+    cursor: pointer;
+  }
+
+  .kindle-notice:active {
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  .kindle-notice-link {
+    min-height: 44px;
+    padding: 0.5rem 0.75rem;
+    margin-left: 0.5rem;
+    background: rgba(0, 0, 0, 0.08);
+    border-radius: 0.35rem;
+  }
+}
+
+/* ---- Kindle device specific (detected by JS) ---- */
+body.kindle-device a {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.15);
+  tap-highlight-color: rgba(0, 0, 0, 0.15);
+}
+
+body.kindle-device .post-list-card,
+body.kindle-device .interview-link,
+body.kindle-device .topic-portal-item {
+  min-height: 60px;
+}
+
+/* Touch feedback - show borders when touched */
+body.using-touch .post-list-card:active,
+body.using-touch .interview-link:active,
+body.using-touch .topic-portal-item:active,
+body.using-touch .roadmap-card:active,
+body.using-touch .nav-drawer-toc-item a:active,
+body.using-touch .nav-drawer-post:active {
+  border-left-color: var(--accent) !important;
+  background: rgba(0, 0, 0, 0.08) !important;
+}

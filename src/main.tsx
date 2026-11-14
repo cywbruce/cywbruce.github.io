@@ -3,6 +3,7 @@ import { createRoot, hydrateRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { posts } from 'virtual:posts';
 import App from './App';
+import { TouchOptimizer } from './components/TouchOptimized';
 import { PostsProvider } from './content/PostsContext';
 import { LocaleProvider } from './i18n/LocaleContext';
 import './styles/global.css';
@@ -17,6 +18,7 @@ const app = (
     <BrowserRouter>
       <LocaleProvider>
         <PostsProvider posts={posts}>
+          <TouchOptimizer />
           <App />
         </PostsProvider>
       </LocaleProvider>
