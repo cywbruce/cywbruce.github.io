@@ -2,7 +2,6 @@
 title: TypeScript 类型系统原理：结构类型、兼容性、变型与推断
 date: 2026-11-05
 summary: 讲清 TS 类型系统的底层规则：结构类型、类型层级（top/bottom）、赋值兼容性、协变/逆变/双变、收窄与控制流分析、推断与上下文类型、分布式条件类型，附面试追问与答案。
-interview: false
 kind: qa
 ---
 
@@ -11,6 +10,10 @@ kind: qa
 ---
 
 ## 一、结构类型（Structural Typing）
+
+### 1. 结构类型与多余属性检查（初级～中级）
+
+**主问：** TS 为什么说是结构类型？什么时候会出现「多余属性检查」？想要名义类型怎么办？
 
 TS 判断兼容性看**形状**，不看名字（Java 是名义类型）。
 
@@ -35,6 +38,10 @@ const b: Point = tmp                   // ✅ 非新鲜对象，只要求「至�
 ---
 
 ## 二、类型层级：top 与 bottom
+
+### 2. unknown / any / never 在类型层级里各是什么位置？（初级～中级）
+
+**主问：** `unknown`、`any`、`never` 分别是 top 还是 bottom？穷尽检查怎么写？
 
 ```text
           unknown            ← top：任何值都能赋给它
@@ -75,6 +82,10 @@ function area(s: Shape) {
 
 ## 三、联合与交叉：是集合运算
 
+### 3. 联合 / 交叉与 keyof 的反直觉规则（中级）
+
+**主问：** 把类型看成值的集合，联合和交叉分别意味着什么？`keyof (A | B)` 为什么是公共键？
+
 把类型看成**值的集合**，很多规则就自然了：
 
 - `A | B` 是并集，值更多，类型更「宽」；**能访问的属性**只有公共的那部分。
@@ -94,6 +105,10 @@ u.a // ✅ 公共属性
 ---
 
 ## 四、变型：协变、逆变、双变
+
+### 4. 协变 / 逆变 / 双变分别出现在哪？（高级）
+
+**主问：** 函数参数为什么是逆变？`strictFunctionTypes` 对方法简写为何失效？数组协变为什么不安全？
 
 设 `Dog extends Animal`：
 
@@ -135,6 +150,10 @@ animals.push(new Cat())        // 编译通过，但运行时 dogs 里混进了�
 
 ## 五、收窄与控制流分析
 
+### 5. 类型收窄手段与失效场景（中级）
+
+**主问：** `typeof` / `instanceof` / `in` / 可辨识联合 / 自定义守卫各有什么局限？闭包里收窄为什么会失效？
+
 编译器沿着代码分支追踪变量的类型：
 
 | 手段 | 例子 | 局限 |
@@ -165,7 +184,11 @@ TS 5.4 起，闭包在**最后一次赋值之后**创建时，可以保留收窄
 
 ## 六、类型推断
 
-### 1. 字面量拓宽（Widening）
+### 6. 字面量拓宽、上下文类型、satisfies（中级）
+
+**主问：** `let` / `const` / `as const` / `satisfies` 对推断结果有什么差别？
+
+#### 字面量拓宽（Widening）
 
 ```ts
 let a = 'hi'        // string（let 会拓宽）
@@ -174,27 +197,13 @@ const o = { k: 'hi' } // { k: string }（对象属性可变，所以拓宽）
 const o2 = { k: 'hi' } as const // { readonly k: 'hi' }
 ```
 
-### 2. 上下文类型（Contextual Typing）
+#### 上下文类型（Contextual Typing）
 
 ```ts
 window.addEventListener('click', e => e.clientX) // e 根据事件名推断成 MouseEvent
 ```
 
-### 3. 泛型推断与 `const` 类型参数（TS 5.0）
-
-```ts
-function tuple<const T extends readonly unknown[]>(...xs: T) { return xs }
-const t = tuple('a', 1) // readonly ['a', 1]，而不是 (string | number)[]
-```
-
-### 4. `NoInfer`（TS 5.4）
-
-```ts
-function pick<T extends string>(opts: T[], def: NoInfer<T>) {}
-pick(['a', 'b'], 'c') // ❌ 没有 NoInfer 时，T 会被推断成 'a'|'b'|'c'
-```
-
-### 5. `satisfies`（TS 4.9）
+#### `satisfies`（TS 4.9）
 
 ```ts
 const routes = {
@@ -206,9 +215,27 @@ routes.user // 仍然是字面量类型，同时校验了结构
 
 **`satisfies` 和类型注解的区别：** 注解（`const x: T`）会把类型**拓宽**成 T；`satisfies` 只做**校验**，保留推断出来的更精确的类型。
 
+### 7. const 类型参数与 NoInfer（中高级）
+
+**主问：** TS 5 的 `const` 类型参数和 `NoInfer` 分别解决什么推断问题？
+
+```ts
+function tuple<const T extends readonly unknown[]>(...xs: T) { return xs }
+const t = tuple('a', 1) // readonly ['a', 1]，而不是 (string | number)[]
+```
+
+```ts
+function pick<T extends string>(opts: T[], def: NoInfer<T>) {}
+pick(['a', 'b'], 'c') // ❌ 没有 NoInfer 时，T 会被推断成 'a'|'b'|'c'
+```
+
 ---
 
 ## 七、条件类型的分布式规则
+
+### 8. 分布式条件类型与 IsNever 的坑（中高级）
+
+**主问：** 什么时候条件类型会「分布」？为什么 `IsNever<T>` 必须写成 `[T] extends [never]`？
 
 规则：`T extends U ? X : Y` 中，**`T` 是裸类型参数**并且被实例化为联合时，会逐个成员计算。
 
@@ -229,6 +256,10 @@ type B = IsString2<string | number> // false
 
 ## 八、interface 与 type 的底层差异
 
+### 9. interface 和 type 底层差异与选型（初级～中级）
+
+**主问：** `interface` 和 `type` 在声明合并、性能、错误信息上有什么差别？项目里怎么选？
+
 | 维度 | `interface` | `type` |
 | --- | --- | --- |
 | 声明合并 | ✅（模块增强靠它） | ❌ |
@@ -242,6 +273,10 @@ type B = IsString2<string | number> // false
 ---
 
 ## 九、面试追问速答
+
+### 10. 类型擦除与 Object.keys 返回类型（中级）
+
+**主问：** TS 类型能影响运行时吗？为什么 `Object.keys(obj)` 返回 `string[]` 而不是 `(keyof T)[]`？
 
 1. **TS 类型能影响运行时吗？** 不能。类型会被完全擦除（`enum`、参数属性、装饰器这类会产出代码的语法除外），运行时安全要靠校验库（zod 等）。
 2. **`{}`、`object`、`Object` 有什么区别？** `{}` 表示除了 `null/undefined` 以外的任何值（包括原始类型）；`object` 只表示非原始类型；`Object` 和 `{}` 接近，但会检查 `toString` 等方法签名，基本不用。

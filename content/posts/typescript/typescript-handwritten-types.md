@@ -2,7 +2,6 @@
 title: TypeScript 手写工具类型 20 题（附答案与追问）
 date: 2026-11-05
 summary: 从 Partial 到 UnionToIntersection，覆盖映射类型、条件类型、infer、分布式、模板字面量、递归，每题给实现、要点和面试追问。
-interview: false
 kind: qa
 ---
 
@@ -29,7 +28,9 @@ type B = ToArr2<string | number> // (string | number)[]（不分布）
 
 ## 一、映射类型（初 / 中级）
 
-### 1. MyPartial / MyRequired / MyReadonly
+### 1. MyPartial / MyRequired / MyReadonly（初级）
+
+**主问：** 手写 `Partial`、`Required`、`Readonly`，并说明 `-?` 的作用。
 
 ```ts
 type MyPartial<T> = { [K in keyof T]?: T[K] }
@@ -40,7 +41,9 @@ type Mutable<T> = { -readonly [K in keyof T]: T[K] }
 
 **追问：** `-?` 去掉可选后，`T[K]` 里的 `undefined` 也会被去掉吗？（会：同态映射配合 `-?` 时会把可选带来的 `undefined` 一起去掉；但开了 `exactOptionalPropertyTypes` 以后行为会有差异）
 
-### 2. MyPick
+### 2. MyPick（初级）
+
+**主问：** 手写 `Pick<T, K>`，并说明为什么要写 `K extends keyof T`。
 
 ```ts
 type MyPick<T, K extends keyof T> = { [P in K]: T[P] }
@@ -48,7 +51,9 @@ type MyPick<T, K extends keyof T> = { [P in K]: T[P] }
 
 **要点：** `K extends keyof T` 是约束，防止传入不存在的键。
 
-### 3. MyRecord
+### 3. MyRecord（初级）
+
+**主问：** 手写 `Record<K, V>`，`keyof any` 是什么？
 
 ```ts
 type MyRecord<K extends keyof any, V> = { [P in K]: V }
@@ -56,7 +61,9 @@ type MyRecord<K extends keyof any, V> = { [P in K]: V }
 
 **追问：** `keyof any` 是什么？（`string | number | symbol`）
 
-### 4. MyExclude / MyExtract（依赖分布式）
+### 4. MyExclude / MyExtract（中级）
+
+**主问：** 手写 `Exclude` / `Extract`，并解释为什么依赖分布式条件类型。
 
 ```ts
 type MyExclude<T, U> = T extends U ? never : T
@@ -65,7 +72,9 @@ type MyExtract<T, U> = T extends U ? T : never
 
 **要点：** `never` 在联合里会被吸收，所以分布后再合并，就相当于做了过滤。
 
-### 5. MyOmit
+### 5. MyOmit（中级）
+
+**主问：** 手写 `Omit`，对比「Pick + Exclude」和「键重映射」两种写法。
 
 ```ts
 type MyOmit<T, K extends keyof any> = MyPick<T, MyExclude<keyof T, K>>
@@ -75,7 +84,9 @@ type MyOmit2<T, K> = { [P in keyof T as P extends K ? never : P]: T[P] }
 
 **追问：** 官方 `Omit` 的 `K` 为什么是 `keyof any` 而不是 `keyof T`？（为了灵活，代价是写错键不报错。团队可以封装一个 `StrictOmit<T, K extends keyof T>`）
 
-### 6. 按值类型筛选键：PickByType
+### 6. 按值类型筛选键：PickByType（中级）
+
+**主问：** 写一个 `PickByType<T, V>`，只保留值类型可赋给 `V` 的键。
 
 ```ts
 type PickByType<T, V> = {
@@ -84,7 +95,9 @@ type PickByType<T, V> = {
 type S = PickByType<{ a: string; b: number; c: string }, string> // { a; c }
 ```
 
-### 7. 部分可选：PartialBy
+### 7. 部分可选：PartialBy（中级）
+
+**主问：** 写一个 `PartialBy<T, K>`，只让部分键变成可选，并说明 `Simplify` 的用途。
 
 ```ts
 type Simplify<T> = { [K in keyof T]: T[K] } & {}
@@ -99,7 +112,9 @@ type PartialBy<T, K extends keyof T> = Simplify<
 
 ## 二、infer 解构（中级）
 
-### 8. MyReturnType / MyParameters
+### 8. MyReturnType / MyParameters（中级）
+
+**主问：** 用手写 `ReturnType` / `Parameters`，说明 `infer` 的位置。
 
 ```ts
 type MyReturnType<T extends (...args: any) => any> =
@@ -111,7 +126,9 @@ type MyParameters<T extends (...args: any) => any> =
 
 **追问：** 重载函数取 `ReturnType` 得到的是哪个签名？（**最后一个**重载签名）
 
-### 9. MyAwaited（递归解 Promise）
+### 9. MyAwaited（中级）
+
+**主问：** 手写 `Awaited`：递归解开嵌套 Promise / thenable。
 
 ```ts
 type MyAwaited<T> =
@@ -131,7 +148,9 @@ type UnwrapPromise<T> = T extends Promise<infer R> ? UnwrapPromise<R> : T
 
 **追问：** 官方实现为什么按 `then` 匹配，而不是直接匹配 `Promise`？（为了兼容任意 thenable）
 
-### 10. 元组首尾：First / Last / Pop
+### 10. 元组首尾：First / Last / Pop（中级）
+
+**主问：** 用 `infer` 实现元组的 `First` / `Last` / `Pop`。
 
 ```ts
 type First<T extends readonly any[]> = T extends [infer F, ...any[]] ? F : never
@@ -139,7 +158,9 @@ type Last<T extends readonly any[]> = T extends [...any[], infer L] ? L : never
 type Pop<T extends readonly any[]> = T extends [...infer R, any] ? R : []
 ```
 
-### 11. 数组元素类型 / 元组转联合
+### 11. 数组元素类型 / 元组转联合（初级）
+
+**主问：** 如何从数组 / `as const` 元组推导元素联合类型？
 
 ```ts
 type ElementOf<T> = T extends readonly (infer E)[] ? E : never
@@ -155,7 +176,9 @@ type Role = (typeof roles)[number] // 'admin' | 'user'
 
 ## 三、递归与深层（中 / 高级）
 
-### 12. DeepReadonly / DeepPartial
+### 12. DeepReadonly / DeepPartial（高级）
+
+**主问：** 手写 `DeepReadonly`，并说明为什么要先排除函数。
 
 ```ts
 type DeepReadonly<T> = T extends (...args: any) => any
@@ -167,7 +190,9 @@ type DeepReadonly<T> = T extends (...args: any) => any
 
 **追问：** 为什么要先排除函数？（函数也是 `object`，不排除的话会被映射坏掉）
 
-### 13. 拍平数组：Flatten
+### 13. 拍平数组：Flatten（高级）
+
+**主问：** 手写递归类型 `Flatten`，把嵌套数组拍平。
 
 ```ts
 type Flatten<T extends any[]> = T extends [infer F, ...infer R]
@@ -175,7 +200,9 @@ type Flatten<T extends any[]> = T extends [infer F, ...infer R]
   : []
 ```
 
-### 14. 路径：Paths（表单 / i18n 键）
+### 14. 路径：Paths（高级）
+
+**主问：** 写一个 `Paths<T>`，生成对象路径联合（表单 / i18n 键），并谈深度限制。
 
 ```ts
 type Paths<T> = T extends object
@@ -192,7 +219,9 @@ type P = Paths<{ user: { name: string; age: number } }>
 
 ## 四、模板字面量（中 / 高级）
 
-### 15. 事件名：`on${Capitalize}`
+### 15. 事件名：`on${Capitalize}`（中级）
+
+**主问：** 用模板字面量 + 键重映射，把 `{ change; close }` 变成 `onChange` / `onClose` 事件处理器类型。
 
 ```ts
 type EventHandlers<T> = {
@@ -202,7 +231,9 @@ type H = EventHandlers<{ change: string; close: void }>
 // { onChange: (v: string) => void; onClose: (v: void) => void }
 ```
 
-### 16. 路由参数提取
+### 16. 路由参数提取（高级）
+
+**主问：** 从路由字符串 `'/user/:id/post/:pid'` 推断出参数对象类型。
 
 ```ts
 type RouteParams<S extends string> =
@@ -215,7 +246,9 @@ type RouteParams<S extends string> =
 type R = RouteParams<'/user/:id/post/:pid'> // { id: string; pid: string }
 ```
 
-### 17. Trim / CamelCase
+### 17. Trim / CamelCase（高级）
+
+**主问：** 用模板字面量递归实现 `TrimLeft` / `CamelCase`。
 
 ```ts
 type TrimLeft<S extends string> = S extends ` ${infer R}` ? TrimLeft<R> : S
@@ -228,7 +261,9 @@ type C = CamelCase<'user_first_name'> // 'userFirstName'
 
 ## 五、高级技巧
 
-### 18. UnionToIntersection（逆变位置推断）
+### 18. UnionToIntersection（高级）
+
+**主问：** 手写 `UnionToIntersection`，并讲清为什么能在逆变位置推断出交叉。
 
 ```ts
 type UnionToIntersection<U> =
@@ -239,7 +274,9 @@ type UnionToIntersection<U> =
 
 **原理：** 先分布，得到函数联合 `((x: A) => void) | ((x: B) => void)`；在**参数（逆变）位置**做 `infer` 时，TS 会推断出交叉类型 `A & B`。能讲清楚协变和逆变，就是高级信号。
 
-### 19. IsAny / IsNever / Equal
+### 19. IsAny / IsNever / Equal（高级）
+
+**主问：** 手写 `IsNever` / `IsAny` / `Equal`，说明为什么 `IsNever` 必须包一层元组。
 
 ```ts
 type IsNever<T> = [T] extends [never] ? true : false // 必须包一层，否则分布成 never
@@ -251,7 +288,9 @@ type Equal<X, Y> =
 
 **追问：** `IsNever<never>` 不包 `[]` 会得到什么？（`never`：空联合分布之后结果还是空）
 
-### 20. 品牌类型（Branded Types）
+### 20. 品牌类型（高级）
+
+**主问：** 如何用品牌类型避免 `UserId` / `OrderId` 混用？成本边界在哪？
 
 ```ts
 type Brand<T, B extends string> = T & { readonly __brand: B }

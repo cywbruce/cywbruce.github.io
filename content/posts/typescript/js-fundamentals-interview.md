@@ -2,7 +2,6 @@
 title: JavaScript 基础八股与手写题（TS 版答案）
 date: 2026-11-05
 summary: this 绑定、作用域与 TDZ、闭包、原型链与继承、类型转换、深浅拷贝、事件循环（浏览器 + Node）、Promise 全家桶、防抖节流、柯里化、并发控制，每题给答案与追问。
-interview: false
 kind: qa
 ---
 
@@ -11,6 +10,10 @@ TypeScript 只是编译期的类型层，运行时仍然是 JS。所以大厂 TS
 ---
 
 ## 一、作用域、提升与 TDZ
+
+### 1. var / let / const 与 TDZ（初级）
+
+**主问：** `var` / `let` / `const` 在作用域、提升、TDZ 上有什么区别？经典 for 循环输出题怎么解释？
 
 | 声明 | 作用域 | 提升 | 重复声明 | 挂到 `window` |
 | --- | --- | --- | --- | --- |
@@ -37,6 +40,10 @@ for (let i = 0; i < 3; i++) setTimeout(() => console.log(i)) // 0 1 2（let 每�
 
 ## 二、this 绑定的四条规则
 
+### 2. this 绑定优先级（初级）
+
+**主问：** this 的四条绑定规则优先级是什么？箭头函数的 this 有什么特殊？
+
 优先级：**new > 显式绑定（call/apply/bind）> 隐式绑定（obj.fn()）> 默认绑定**
 
 ```js
@@ -60,6 +67,10 @@ new show()        // new：新创建的对象
 
 ## 三、闭包
 
+### 3. 什么是闭包？会不会泄漏？（初级）
+
+**主问：** 什么是闭包？常见用途和风险是什么？
+
 函数会保留对**定义时词法环境**的引用。
 
 **用途：** 私有变量、柯里化、防抖节流、模块模式。
@@ -75,6 +86,10 @@ function counter() {
 ---
 
 ## 四、原型链与继承
+
+### 4. 原型链与手写 new / instanceof（中级）
+
+**主问：** 说说原型链。手写 `new` 和 `instanceof`，并讲清寄生组合继承。
 
 ```text
 实例.__proto__ === 构造函数.prototype
@@ -121,6 +136,10 @@ Child.prototype.constructor = Child
 
 ## 五、类型与类型转换
 
+### 5. == 规则与类型判断（初级）
+
+**主问：** `==` 的核心规则有哪些？`typeof null`、`Object.is` 和 `===` 有什么差别？
+
 - 8 种类型：`undefined null boolean number string symbol bigint` 加 `object`。
 - `typeof null === 'object'` 是历史 bug；`typeof function(){} === 'function'`。
 - 判断数组用 `Array.isArray`；通用的精确判断用 `Object.prototype.toString.call(x)`，结果形如 `'[object Date]'`。
@@ -143,6 +162,10 @@ Child.prototype.constructor = Child
 ---
 
 ## 六、深浅拷贝
+
+### 6. 深拷贝怎么写？边界有哪些？（中级）
+
+**主问：** 浅拷贝和深拷贝怎么选？手写支持循环引用的深拷贝，并说明 `structuredClone` 的局限。
 
 - **浅拷贝：** `{...obj}`、`Object.assign`、`arr.slice()`
 - **深拷贝：** 优先用 `structuredClone`，它支持循环引用、Date、Map、Set，但**不支持函数、DOM 和原型链**。`JSON.parse(JSON.stringify())` 会丢失 `undefined`、函数和 Symbol，Date 会变成字符串，遇到循环引用直接报错。
@@ -181,7 +204,11 @@ function deepClone<T>(v: T, seen = new WeakMap<object, any>()): T {
 
 ## 七、事件循环
 
-### 浏览器
+### 7. 浏览器事件循环输出题（中级）
+
+**主问：** 给一段混合 `setTimeout`、`Promise.then`、`async/await` 的代码，说出输出顺序并讲理由。
+
+#### 浏览器
 
 ```text
 执行一个宏任务（script / setTimeout / I/O / UI 事件）
@@ -203,7 +230,11 @@ console.log('script end')
 
 **要点：** `await x` 之后的代码相当于放进了 `.then` 回调；`new Promise` 的执行器是**同步**执行的。
 
-### Node.js（libuv 的 6 个阶段）
+### 8. Node 事件循环与 nextTick（高级）
+
+**主问：** Node 的事件循环分哪些阶段？`process.nextTick` 和 `Promise.then`、`setImmediate` 谁先？
+
+#### Node.js（libuv 的 6 个阶段）
 
 ```text
 timers（setTimeout / setInterval）
@@ -222,7 +253,11 @@ timers（setTimeout / setInterval）
 
 ## 八、Promise 全家桶
 
-### Promise.all / allSettled / race / any
+### 9. 手写 Promise.all 全家桶（中级）
+
+**主问：** 手写 `Promise.all`，并对比 `allSettled` / `race` / `any` 的语义。
+
+#### Promise.all / allSettled / race / any
 
 ```ts
 function promiseAll<T>(ps: Iterable<T | PromiseLike<T>>): Promise<Awaited<T>[]> {
@@ -279,7 +314,11 @@ function promiseAny<T>(ps: (T | PromiseLike<T>)[]): Promise<Awaited<T>> {
 | `race` | 第一个结束（成功） | 第一个结束（失败） |
 | `any` | 第一个成功 | 全部失败（AggregateError） |
 
-### 并发控制（高频）
+### 10. 并发池与超时请求（高级）
+
+**主问：** 手写限制并发数为 N 的任务池；失败与取消怎么处理？带超时的请求怎么写？
+
+#### 并发控制（高频）
 
 ```ts
 async function pool<T>(tasks: (() => Promise<T>)[], limit: number): Promise<T[]> {
@@ -299,7 +338,7 @@ async function pool<T>(tasks: (() => Promise<T>)[], limit: number): Promise<T[]>
 **追问：** 一个任务失败了怎么办？
 **答：** 上面的写法遇到失败会整体 reject，但其他 worker 还在跑。如果需要「失败也继续」，改用 `allSettled` 的思路收集结果；如果需要取消，传入 `AbortSignal`。
 
-### 带超时的请求
+#### 带超时的请求
 
 ```ts
 function withTimeout<T>(p: Promise<T>, ms: number): Promise<T> {
@@ -315,6 +354,10 @@ function withTimeout<T>(p: Promise<T>, ms: number): Promise<T> {
 ---
 
 ## 九、防抖与节流
+
+### 11. 防抖与节流（中级）
+
+**主问：** 手写 debounce / throttle（TS 版），说明适用场景差异。
 
 ```ts
 function debounce<A extends unknown[]>(fn: (...a: A) => void, wait: number) {
@@ -353,7 +396,11 @@ function throttle<A extends unknown[]>(fn: (...a: A) => void, wait: number) {
 
 ## 十、其他手写高频
 
-### call / apply / bind
+### 12. 手写 call / apply / bind（中级）
+
+**主问：** 手写 `call` / `bind`，并说明 `bind` 后再 `new` 时 this 指向谁。
+
+#### call / apply / bind
 
 ```ts
 Function.prototype.myCall = function (ctx: any, ...args: any[]) {
@@ -376,7 +423,9 @@ Function.prototype.myBind = function (ctx: any, ...pre: any[]) {
 }
 ```
 
-### 柯里化
+### 13. 柯里化（中级）
+
+**主问：** 手写柯里化，使 `add(1)(2)(3)` 能得到结果。
 
 ```ts
 function curry(fn: (...a: any[]) => any) {
@@ -388,7 +437,9 @@ const add = curry((a: number, b: number, c: number) => a + b + c)
 add(1)(2)(3) // 6
 ```
 
-### 发布订阅（类型安全版）
+### 14. 类型安全的发布订阅（中级～高级）
+
+**主问：** 实现类型安全的 EventEmitter：`on` / `emit` 的事件名和参数要跟着事件表走。
 
 ```ts
 class Emitter<E extends Record<string, unknown[]>> {
@@ -405,7 +456,9 @@ const bus = new Emitter<{ login: [userId: string]; logout: [] }>()
 bus.on('login', (id) => id.toUpperCase())
 ```
 
-### 数组拍平 / 去重
+### 15. 数组拍平与去重（初级～中级）
+
+**主问：** 手写数组拍平（可控深度）和去重。
 
 ```ts
 const flat = (arr: unknown[], d = Infinity): unknown[] =>
@@ -416,6 +469,10 @@ const uniq = <T,>(a: T[]) => [...new Set(a)]
 ---
 
 ## 十一、内存与垃圾回收
+
+### 16. 内存泄漏与 V8 GC（高级）
+
+**主问：** 前端常见内存泄漏有哪些？V8 分代回收大致怎么工作？怎么用堆快照排查？
 
 - **V8 分代回收：** 新生代用 Scavenge（复制算法，From/To 两个空间）；对象存活多次后晋升到老生代，用标记清除加标记整理，并通过增量和并发标记减少停顿。
 - **常见泄漏：** 意外的全局变量、忘记清除的定时器和事件监听、闭包持有大对象、已脱离 DOM 但仍被引用的节点、只增不减的 Map 缓存（可以用 `WeakMap`、LRU）。

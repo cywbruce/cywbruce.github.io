@@ -2,7 +2,6 @@
 title: TypeScript 工程化：tsconfig、声明文件、模块与编译链
 date: 2026-11-05
 summary: 关键 tsconfig 选项怎么选、.d.ts 与模块增强、ESM/CJS 互操作、tsc 与 swc/esbuild 分工、monorepo 与类型性能排查，附面试追问。
-interview: false
 kind: qa
 ---
 
@@ -12,7 +11,9 @@ kind: qa
 
 ## 一、tsconfig 关键选项
 
-### 1. 严格度（必开）
+### 1. strict 与关键严格选项（初级）
+
+**主问：** `strict` 开了之后实际打开了哪些检查？老项目怎么渐进开启？
 
 | 选项 | 作用 | 建议 |
 | --- | --- | --- |
@@ -28,7 +29,9 @@ kind: qa
 **追问：** 老项目怎么渐进开 `strict`？
 **答：** 先开 `strict`，再用 `// @ts-expect-error` 或按目录 `include` 分批推进；也可以用 `typescript-strict-plugin` 让新文件强制严格；在 CI 里记录错误数，只允许下降。**不要**为了消灭报错就全局关掉检查。
 
-### 2. 模块与解析
+### 2. module / moduleResolution 怎么选？（中级）
+
+**主问：** Vite 前端、Node ESM 发包、老 CJS 项目，`module` 和 `moduleResolution` 分别怎么配？
 
 | 场景 | `module` | `moduleResolution` |
 | --- | --- | --- |
@@ -39,7 +42,9 @@ kind: qa
 - `bundler`：允许省略扩展名，支持 `package.json` 的 `exports`，适合有打包器的场景。
 - `NodeNext`：严格遵守 Node 规则，ESM 里导入必须写 `.js` 扩展名（即使源文件是 `.ts`），并按 `package.json` 的 `"type"` 判断文件是 ESM 还是 CJS。
 
-### 3. 和构建工具配合
+### 3. paths 配了但运行时报找不到模块（中级）
+
+**主问：** 配了 `paths` / `baseUrl`，类型检查通过，运行时却报找不到模块，为什么？怎么修？
 
 | 选项 | 作用 |
 | --- | --- |
@@ -50,22 +55,21 @@ kind: qa
 | `esModuleInterop` | 允许 `import x from 'cjs-lib'` |
 | `paths` / `baseUrl` | 路径别名。**只影响类型解析**，运行时还要打包器或 `tsconfig-paths` 配合 |
 
-**追问：** 配了 `paths`，编译通过但运行时报找不到模块，为什么？
 **答：** `tsc` 不会改写 import 路径。别名需要在 Vite（`resolve.alias`）或 Node（`tsconfig-paths`、子路径 `imports`）里再配一遍。
 
 ---
 
 ## 二、声明文件 `.d.ts`
 
-### 1. 类型从哪里来
+### 4. @types 与 declare module（初级）
+
+**主问：** 第三方库没有类型时，类型从哪里来？`@types/xxx` 和自己写 `declare module` 怎么选？
 
 ```text
 库自带 types（package.json "types" / "exports".types）
   → DefinitelyTyped：@types/xxx
   → 自己写 declare module
 ```
-
-### 2. 常见写法
 
 ```ts
 // global.d.ts —— 无类型的第三方模块兜底
@@ -88,9 +92,9 @@ declare global {
 export {} // 让文件成为模块，declare global 才生效
 ```
 
-### 3. 模块增强（Module Augmentation）
+### 5. 模块增强 Module Augmentation（中级）
 
-给第三方库补字段，而不是 fork：
+**主问：** 如何给第三方库（如 axios config）补字段，而不去 fork？和「声明新模块」有什么区别？
 
 ```ts
 // 给 axios 的 config 加自定义字段
@@ -103,8 +107,6 @@ declare module 'axios' {
 ```
 
 依赖的是 **interface 声明合并**。这也是「对外扩展点用 `interface`」的主要原因。
-
-### 4. 环境变量类型（Vite）
 
 ```ts
 /// <reference types="vite/client" />
@@ -120,6 +122,10 @@ interface ImportMetaEnv {
 ---
 
 ## 三、ESM 与 CJS 互操作
+
+### 6. ESM / CJS 发包与双包风险（高级）
+
+**主问：** 发布一个同时支持 ESM 和 CJS 的包，`exports` 怎么写？什么是双包风险？
 
 | 点 | ESM | CJS |
 | --- | --- | --- |
@@ -153,6 +159,10 @@ interface ImportMetaEnv {
 
 ## 四、编译链：谁检查，谁转译
 
+### 7. tsc 与 swc / esbuild 怎么分工？（高级）
+
+**主问：** 为什么生产构建常用 esbuild/swc 转译，另开 `tsc --noEmit` 做检查？`const enum` 和装饰器元数据为什么容易踩坑？
+
 ```text
 tsc            ：类型检查 + 转译 + 产出 .d.ts（慢，但唯一完整的检查器）
 swc / esbuild  ：只擦除类型、转译（很快，不做类型检查）
@@ -169,6 +179,10 @@ babel          ：@babel/preset-typescript，同样只擦除类型
 ---
 
 ## 五、enum 的坑与替代
+
+### 8. 为什么不推荐 enum？替代方案是什么？（中级）
+
+**主问：** 数字 `enum` / `const enum` 有哪些坑？团队更推荐什么写法？
 
 ```ts
 enum Color { Red, Green }     // 产出运行时对象，数字枚举有反向映射 Color[0] === 'Red'
@@ -188,6 +202,10 @@ type Color = (typeof Color)[keyof typeof Color] // 'red' | 'green'
 
 ## 六、Monorepo 与项目引用
 
+### 9. Monorepo 里如何共享 TS 与 UI 包类型？（高级）
+
+**主问：** Project References、共享 `tsconfig.base`、UI 包的 `peerDependencies` / `exports.types` 你会怎么定？
+
 - **Project References**：`composite: true` 加上 `references: [{ path: '../pkg' }]`，再用 `tsc -b` 做增量构建。适合大仓按包拆分检查。
 - 共享 `tsconfig.base.json`，各个包通过 `extends` 继承。
 - 共享 UI 包：`react` 放进 `peerDependencies`，避免出现两份 React 导致 Hooks 报错；类型入口通过 `exports.types` 暴露。
@@ -198,6 +216,10 @@ type Color = (typeof Color)[keyof typeof Color] // 'red' | 'green'
 ---
 
 ## 七、类型检查性能排查
+
+### 10. 类型检查变慢怎么排查？（高级）
+
+**主问：** `tsc` 变慢时你怎么定位？常见元凶和优化手段有哪些？
 
 ```bash
 tsc --noEmit --extendedDiagnostics   # 看检查耗时、实例化次数、内存
@@ -215,6 +237,10 @@ tsc --noEmit --generateTrace trace   # 生成 trace，配合 @typescript/analyze
 ---
 
 ## 八、类型测试与质量门禁
+
+### 11. 如何给类型写测试、管住 any？（中级～高级）
+
+**主问：** 你会怎么给工具类型 / 公共 API 做类型测试？`@ts-expect-error` 和 `@ts-ignore` 怎么选？CI 里跑什么？
 
 ```ts
 import { expectTypeOf } from 'vitest'
