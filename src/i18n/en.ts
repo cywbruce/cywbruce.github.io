@@ -49,6 +49,10 @@ export const en: Record<MessageKey, string> = {
   'module.primer.desc': 'Adapted from system-design-primer: fundamentals, estimation, design & OOD questions, reading list',
   'module.toQuestions': 'Drill questions →',
   'notFound.title': 'Page not found',
+  'category.interview-lab': 'Interview Grading System',
+  'entry.lab.title': 'Interview Grading System · 38 Sets',
+  'entry.lab.desc': 'Full-stack + AI Agent: follow-ups · L1–L5 leveling · anti-memorization signals',
+  'entry.lab.new': 'New: AI Agent',
   'lang.zh': '中文',
   'lang.en': 'English',
 };

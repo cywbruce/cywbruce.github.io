@@ -13,6 +13,9 @@ function categoryLabel(id: string, t: (key: MessageKey) => string): string {
   if (id === UNCATEGORIZED_ID) {
     return t('list.uncategorized');
   }
+  if (id === 'interview-lab') {
+    return t('category.interview-lab');
+  }
   return id;
 }
 

@@ -13,6 +13,9 @@ function categoryLabel(id: string, t: (key: MessageKey) => string): string {
   if (id === UNCATEGORIZED_ID) {
     return t('list.uncategorized');
   }
+  if (id === 'interview-lab') {
+    return t('category.interview-lab');
+  }
   return id;
 }
 
@@ -39,6 +42,12 @@ export function HomePage() {
           </Link>
         </p>
       </section>
+      <Link to="/posts/interview-lab/overview/" className="lab-entry">
+        <span className="lab-entry-new">{t('entry.lab.new')}</span>
+        <span className="lab-entry-title">{t('entry.lab.title')}</span>
+        <span className="lab-entry-desc">{t('entry.lab.desc')}</span>
+        <span className="lab-entry-go" aria-hidden="true">→</span>
+      </Link>
       <section className="roadmap-hero" aria-label={t('roadmap.title')}>
         <header className="roadmap-hero-head">
           <h2 className="roadmap-hero-title">{t('roadmap.title')}</h2>

@@ -46,6 +46,10 @@ export const zh = {
   'module.primer.desc': '整理自 system-design-primer：基础知识、估算、系统设计题、面向对象设计题、阅读清单',
   'module.toQuestions': '去题库刷题 →',
   'notFound.title': '页面不存在',
+  'category.interview-lab': '面试定级体系',
+  'entry.lab.title': '面试定级体系 · 38 套题库',
+  'entry.lab.desc': '全栈 + AI Agent：追问链 · L1–L5 定级 · 防背题信号',
+  'entry.lab.new': '新增 AI Agent',
   'lang.zh': '中文',
   'lang.en': 'English',
 } as const;
