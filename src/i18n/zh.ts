@@ -47,9 +47,9 @@ export const zh = {
   'module.toQuestions': '去题库刷题 →',
   'notFound.title': '页面不存在',
   'category.interview-lab': '面试定级体系',
-  'entry.lab.title': '面试定级体系 · 38 套题库',
-  'entry.lab.desc': '全栈 + AI Agent：追问链 · L1–L5 定级 · 防背题信号',
-  'entry.lab.new': '新增 AI Agent',
+  'entry.lab.title': '面试定级体系 · 40 套题库',
+  'entry.lab.desc': '全栈 + Elasticsearch + AI Agent：追问链 · L1–L5 定级 · 防背题信号',
+  'entry.lab.new': '新增 ES + AI Agent',
   'lang.zh': '中文',
   'lang.en': 'English',
 } as const;
