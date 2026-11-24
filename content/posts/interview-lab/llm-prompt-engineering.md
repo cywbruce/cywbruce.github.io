@@ -1,6 +1,7 @@
 ---
 title: "LLM 基础与提示工程面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 901
 summary: "LLM 自回归生成、token 与分词、上下文窗口、采样参数、消息角色与结构化输出；区分会调 API 与懂原理的人。"
 kind: handbook
 interview: false

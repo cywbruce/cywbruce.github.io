@@ -50,9 +50,9 @@ export const en: Record<MessageKey, string> = {
   'module.toQuestions': 'Drill questions →',
   'notFound.title': 'Page not found',
   'category.interview-lab': 'Interview Grading System',
-  'entry.lab.title': 'Interview Grading System · 40 Sets',
-  'entry.lab.desc': 'Full-stack + Elasticsearch + AI Agent: follow-ups · L1–L5 leveling · anti-memorization signals',
-  'entry.lab.new': 'New: ES + AI Agent',
+  'entry.lab.title': 'Interview Grading System · 42 Sets',
+  'entry.lab.desc': 'Full-stack + ES/Dubbo + AI Agent: follow-ups · L1–L5 leveling · anti-memorization signals',
+  'entry.lab.new': 'New: Dubbo + ES + AI',
   'lang.zh': '中文',
   'lang.en': 'English',
 };

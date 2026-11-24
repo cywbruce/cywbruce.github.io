@@ -1,6 +1,7 @@
 ---
 title: "SQL 优化案例集面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 703
 summary: "EXPLAIN 深度、索引失效、深分页/JOIN/COUNT 案例与慢 SQL 排查（经验区分器）。"
 kind: handbook
 interview: false

@@ -1,6 +1,7 @@
 ---
 title: "Java 集合框架面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 301
 summary: "HashMap 底层、容量与树化阈值、ConcurrentHashMap、fail-fast 与数据结构选型。"
 kind: handbook
 interview: false

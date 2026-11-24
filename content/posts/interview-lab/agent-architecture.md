@@ -1,6 +1,7 @@
 ---
 title: "Agent 架构与推理模式面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 902
 summary: "Agent Loop 控制流、规划与反思、记忆分层、ReAct/Plan-and-Execute 等推理范式取舍，以及循环失控等失效模式。"
 kind: handbook
 interview: false

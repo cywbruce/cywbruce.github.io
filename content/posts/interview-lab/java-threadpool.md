@@ -1,6 +1,7 @@
 ---
 title: "Java ThreadPoolExecutor 面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 104
 summary: "线程池 7 大参数、execute 流程、队列与拒绝策略、ctl 状态机与生产调优。"
 kind: handbook
 interview: false

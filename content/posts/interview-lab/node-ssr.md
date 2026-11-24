@@ -1,6 +1,7 @@
 ---
 title: "Node.js 与 SSR 面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 806
 summary: "libuv 事件循环、Stream 与背压、中间件、SSR 与 hydration 取舍。"
 kind: handbook
 interview: false

@@ -1,6 +1,7 @@
 ---
 title: "Agent 安全与生产实践面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 908
 summary: "提示注入、最小权限与沙箱、纵深防御、成本熔断；真实事故复盘与红队安全评估方法。"
 kind: handbook
 interview: false

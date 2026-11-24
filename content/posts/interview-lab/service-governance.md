@@ -1,6 +1,7 @@
 ---
 title: "服务治理（Dubbo / Nacos / 微服务）面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 602
 summary: "RPC 原理、Dubbo 分层与 SPI、Nacos 双职责、服务网格与 Proxyless Mesh。"
 kind: handbook
 interview: false

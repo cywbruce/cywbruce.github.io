@@ -1,6 +1,7 @@
 ---
 title: "MCP 协议面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 903
 summary: "MCP 三角色三原语、能力协商、stdio/Streamable HTTP 传输、OAuth 2.1 安全边界，含 2025-11-25 修订要点。"
 kind: handbook
 interview: false

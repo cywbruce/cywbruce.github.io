@@ -1,6 +1,7 @@
 ---
 title: "Java ThreadLocal 面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 101
 summary: "ThreadLocal 的引用链、弱引用与内存泄漏、父子线程传递与正确用法，含追问链与定级。"
 kind: handbook
 interview: false

@@ -1,6 +1,7 @@
 ---
 title: "Agent 框架与编排面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 906
 summary: "LangChain/LangGraph 状态机、Chain 与图、多 Agent 模式、可观测性，以及何时该抛弃框架手写的取舍。"
 kind: handbook
 interview: false

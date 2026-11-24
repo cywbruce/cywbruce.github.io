@@ -1,6 +1,7 @@
 ---
 title: "TypeScript 面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 801
 summary: "结构化类型、泛型与条件/映射类型、类型体操的度与 Go 编译器。"
 kind: handbook
 interview: false

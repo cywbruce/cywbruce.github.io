@@ -1,6 +1,7 @@
 ---
 title: "Java 基础与语法核心面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 202
 summary: "equals/hashCode、String 常量池、异常/泛型/Lambda 与 JDK 语言演进。"
 kind: handbook
 interview: false

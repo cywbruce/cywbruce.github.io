@@ -1,6 +1,7 @@
 ---
 title: "MySQL 数据库面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 401
 summary: "B+ 树索引、事务与 MVCC、锁机制、日志与慢 SQL 优化；RC/RR 下 ReadView 差异等核心区分度题。"
 kind: handbook
 interview: false

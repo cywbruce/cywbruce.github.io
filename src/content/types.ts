@@ -12,6 +12,8 @@ export interface Post {
   category?: string;
   /** frontmatter `interview: false` → 不收录进题库 */
   interview?: boolean;
+  /** frontmatter `order` → 同栏目/模块内的显式排序（小者在前），缺省回退日期 */
+  order?: number;
   /** frontmatter `kind` → 首页模块分区 */
   kind?: PostKind;
   html: string;

@@ -1,6 +1,7 @@
 ---
 title: "Java volatile 与 JMM 面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 105
 summary: "volatile 的可见性与禁重排、happens-before、内存屏障、DCL、伪共享与 VarHandle。"
 kind: handbook
 interview: false

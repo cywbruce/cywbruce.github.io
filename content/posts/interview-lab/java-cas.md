@@ -1,6 +1,7 @@
 ---
 title: "Java CAS 与原子类 面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 106
 summary: "Unsafe/cmpxchg、ABA 与自旋、原子类、LongAdder 分段思想与 VarHandle。"
 kind: handbook
 interview: false

@@ -1,6 +1,7 @@
 ---
 title: "Java AQS 面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 103
 summary: "AQS 的 volatile state、CLH 队列与模板方法；acquire/release 完整流程、公平性与现场实现 Mutex。"
 kind: handbook
 interview: false

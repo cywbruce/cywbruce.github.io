@@ -1,6 +1,7 @@
 ---
 title: "Java 设计模式面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 503
 summary: "六大原则、创建型/结构型/行为型模式及其在框架中的应用与辨析。"
 kind: handbook
 interview: false

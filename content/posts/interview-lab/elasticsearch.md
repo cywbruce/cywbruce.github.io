@@ -1,6 +1,7 @@
 ---
 title: "Elasticsearch 搜索与分析面试题库（含追问链与定级指南）"
 date: 2026-11-22
+order: 405
 summary: "倒排索引、分词与映射、分片路由与近实时刷新、BM25 相关性与聚合、深分页与数据同步、向量与混合检索。"
 kind: handbook
 interview: false

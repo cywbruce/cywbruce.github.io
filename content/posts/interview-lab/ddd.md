@@ -1,6 +1,7 @@
 ---
 title: "DDD 领域驱动设计 / 领域建模面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 704
 summary: "战略与战术设计、限界上下文与聚合、事件风暴与伪 DDD 辨析。"
 kind: handbook
 interview: false

@@ -1,6 +1,7 @@
 ---
 title: "Vue 3 面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 803
 summary: "Proxy 响应式、依赖收集、模板编译与 PatchFlag、Vapor 模式。"
 kind: handbook
 interview: false

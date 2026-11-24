@@ -1,6 +1,7 @@
 ---
 title: "AI 编码 Agent 与 IDE 集成 面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 905
 summary: "ACP/MCP 分层、权限三态、上下文注入与 stdio 排障；间接提示注入与误改代码的真实案例复盘。"
 kind: handbook
 interview: false

@@ -1,6 +1,7 @@
 ---
 title: "Agent 评测与可观测性面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 907
 summary: "LLM-as-judge、评测集、trace 定位、质量-成本-延迟三角；评测分高但线上效果差的排查思路。"
 kind: handbook
 interview: false

@@ -82,7 +82,12 @@ export function HomePage() {
           {POST_KINDS.map((kind) => {
             const list = posts
               .filter((p) => p.kind === kind)
-              .sort((a, b) => a.slug.localeCompare(b.slug));
+              .sort((a, b) => {
+                if (a.order !== undefined && b.order !== undefined && a.order !== b.order) {
+                  return a.order - b.order;
+                }
+                return a.slug.localeCompare(b.slug);
+              });
             if (list.length === 0) return null;
             return (
               <details key={kind} className={`module-card module-${kind}`}>

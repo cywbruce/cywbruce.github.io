@@ -1,6 +1,7 @@
 ---
 title: "前端工程化面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 805
 summary: "模块化、Webpack/Vite 原理、包管理与构建性能优化。"
 kind: handbook
 interview: false

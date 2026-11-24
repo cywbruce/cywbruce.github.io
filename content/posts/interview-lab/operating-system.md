@@ -1,6 +1,7 @@
 ---
 title: "操作系统 面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 502
 summary: "进程与线程、内存管理、死锁、I/O 多路复用与性能排查；select/poll/epoll 与 LT/HT。"
 kind: handbook
 interview: false

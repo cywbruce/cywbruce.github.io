@@ -1,6 +1,7 @@
 ---
 title: "Java 死锁排查 面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 107
 summary: "死锁四条件、预防避免检测恢复、jstack/jcmd/Arthas 排查实战与分布式锁问题。"
 kind: handbook
 interview: false

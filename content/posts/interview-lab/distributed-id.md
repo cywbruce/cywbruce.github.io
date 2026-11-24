@@ -1,6 +1,7 @@
 ---
 title: "分布式 ID 面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 603
 summary: "方案演进、雪花位结构与时钟回拨、号段与 Leaf、UUIDv7 的权衡。"
 kind: handbook
 interview: false

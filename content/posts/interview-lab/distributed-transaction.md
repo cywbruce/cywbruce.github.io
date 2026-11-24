@@ -1,6 +1,7 @@
 ---
 title: "分布式事务面试题库（含 Seata、追问链与定级指南）"
 date: 2026-11-20
+order: 601
 summary: "CAP/BASE、2PC/TCC/SAGA、Seata 四模式与实战选型；TCC 空回滚/幂等/悬挂问题。"
 kind: handbook
 interview: false

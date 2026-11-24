@@ -70,6 +70,10 @@ function parsePostFile(rootDir: string, filePath: string): Post {
     marked.parse(content, { async: false }) as string,
   );
   const category = slug.includes('/') ? slug.split('/')[0] : undefined;
+  const order =
+    typeof data.order === 'number' && Number.isFinite(data.order)
+      ? data.order
+      : undefined;
 
   const post: Post = {
     slug,
@@ -85,6 +89,9 @@ function parsePostFile(rootDir: string, filePath: string): Post {
   }
   if (data.interview === false) {
     post.interview = false;
+  }
+  if (order !== undefined) {
+    post.order = order;
   }
   if (typeof data.kind === 'string' && (POST_KINDS as string[]).includes(data.kind)) {
     post.kind = data.kind as PostKind;
@@ -103,6 +110,10 @@ export function loadPosts(dir: string = DEFAULT_POSTS_DIR): Post[] {
   const posts = files.map((filePath) => parsePostFile(dir, filePath));
 
   return posts.sort((a, b) => {
+    // 显式 order 优先（用于体系化栏目按大纲顺序排列）；两边都有 order 时按升序。
+    if (a.order !== undefined && b.order !== undefined && a.order !== b.order) {
+      return a.order - b.order;
+    }
     const aTime = new Date(a.date).getTime();
     const bTime = new Date(b.date).getTime();
     return bTime - aTime;

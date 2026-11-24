@@ -1,6 +1,7 @@
 ---
 title: "React 面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 802
 summary: "Fiber 与调度、Hooks 原理、diff/key、并发/RSC/React Compiler。"
 kind: handbook
 interview: false

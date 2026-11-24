@@ -1,6 +1,7 @@
 ---
 title: "Redis 进阶实战面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 701
 summary: "大 Key/热 Key 治理、慢查询与内存诊断、一致性进阶与真实案例复盘（经验区分器）。"
 kind: handbook
 interview: false

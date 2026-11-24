@@ -1,6 +1,7 @@
 ---
 title: "Java synchronized 与锁升级 面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 102
 summary: "对象头 Mark Word、Monitor、锁升级与编译优化；偏向锁为何被淘汰、DCL 与 volatile 的关系。"
 kind: handbook
 interview: false

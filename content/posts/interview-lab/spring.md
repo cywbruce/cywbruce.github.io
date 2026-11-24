@@ -1,6 +1,7 @@
 ---
 title: "Spring 框架面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 403
 summary: "IOC 与循环依赖三级缓存、AOP、事务传播行为与失效场景、MVC 流程与 Boot 自动配置。"
 kind: handbook
 interview: false

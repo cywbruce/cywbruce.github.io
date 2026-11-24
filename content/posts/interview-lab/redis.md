@@ -1,6 +1,7 @@
 ---
 title: "Redis 缓存与分布式面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 402
 summary: "Redis 数据结构底层、缓存三兄弟、持久化、过期淘汰、分布式锁与主从哨兵 Cluster。"
 kind: handbook
 interview: false

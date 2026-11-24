@@ -1,6 +1,7 @@
 ---
 title: "RAG 检索增强生成面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 904
 summary: "RAG 的切分与 Embedding、混合检索与 rerank、评估体系与 Agentic RAG；检索效果差如何系统性定位根因。"
 kind: handbook
 interview: false

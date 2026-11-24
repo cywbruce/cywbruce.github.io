@@ -1,6 +1,7 @@
 ---
 title: "Java JVM 与 GC 面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 201
 summary: "JVM 内存区域、对象布局、GC 算法与收集器、类加载机制；JDK 默认 GC 等高频辨析。"
 kind: handbook
 interview: false

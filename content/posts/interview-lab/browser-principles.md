@@ -1,6 +1,7 @@
 ---
 title: "浏览器原理与前端性能面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 804
 summary: "渲染流水线、事件循环、重排重绘、缓存与核心网页指标。"
 kind: handbook
 interview: false

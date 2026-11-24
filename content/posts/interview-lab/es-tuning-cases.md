@@ -1,6 +1,7 @@
 ---
 title: "Elasticsearch 调优案例集面试题库（含追问链与定级指南）"
 date: 2026-11-22
+order: 705
 summary: "查询慢、写入拒绝、集群红黄三类线上问题的完整排查案例：深分页、分片规划、段合并、缓存与断路器、容量规划。"
 kind: handbook
 interview: false

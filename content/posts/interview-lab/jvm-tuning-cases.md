@@ -1,6 +1,7 @@
 ---
 title: "JVM 调优案例集面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 702
 summary: "调优方法论、OOM 全家桶、GC 诊断与真实案例排查（经验区分器）。"
 kind: handbook
 interview: false

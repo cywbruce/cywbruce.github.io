@@ -1,6 +1,7 @@
 ---
 title: "消息队列（Kafka / RabbitMQ / RocketMQ）面试题库（含追问链与定级指南）"
 date: 2026-11-20
+order: 404
 summary: "MQ 模型对比、可靠性四问、事务消息与最终一致、Kafka/RabbitMQ/RocketMQ 选型。"
 kind: handbook
 interview: false
