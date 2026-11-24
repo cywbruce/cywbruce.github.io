@@ -3,6 +3,7 @@ import { extname, join, relative, sep } from 'node:path';
 import matter from 'gray-matter';
 import { marked } from 'marked';
 import { decorateHeadingIds } from './toc';
+import { wrapTables } from './decorateTables';
 import { POST_KINDS, type Post, type PostKind } from './types';
 
 export const DEFAULT_POSTS_DIR = 'content/posts';
@@ -66,8 +67,10 @@ function parsePostFile(rootDir: string, filePath: string): Post {
       ? data.summary.trim()
       : undefined;
 
-  const html = decorateHeadingIds(
-    marked.parse(content, { async: false }) as string,
+  const html = wrapTables(
+    decorateHeadingIds(
+      marked.parse(content, { async: false }) as string,
+    ),
   );
   const category = slug.includes('/') ? slug.split('/')[0] : undefined;
   const order =

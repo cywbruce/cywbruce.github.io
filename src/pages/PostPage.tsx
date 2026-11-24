@@ -41,7 +41,7 @@ export function PostPage() {
   }
 
   return (
-    <article className="post">
+    <article className={post.category === 'interview-lab' ? 'post post--handbook' : 'post'}>
       <p className="post-back">
         {fromInterview ? (
           <Link to={`/interview${typeof window !== 'undefined' ? sessionStorage.getItem('interviewQuery') ?? '' : ''}`}>{t('post.backInterview')}</Link>

@@ -770,13 +770,67 @@ pre {
   height: auto;
 }
 
-.post-body table {
-  display: block;
-  width: 100%;
-  max-width: 100%;
+/* ---- handbook articles (interview-lab) get a wider reading column so wide tables breathe ---- */
+@media (min-width: 861px) {
+  body:has(.post--handbook) .site-main {
+    max-width: 62rem;
+  }
+}
+
+/* ---- wrapped tables (question banks / overview) ---- */
+.post-body .table-wrap {
+  margin: 1.35rem 0;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(28, 25, 23, 0.05);
+}
+
+.post-body .table-wrap table {
+  display: table;
+  width: 100%;
+  min-width: 34rem;
+  max-width: 100%;
   border-collapse: collapse;
+  border: 0;
+  font-size: 0.82em;
+  line-height: 1.5;
+}
+
+.post-body .table-wrap th,
+.post-body .table-wrap td {
+  padding: 0.55rem 0.7rem;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+.post-body .table-wrap thead th {
+  background: #f0ece5;
+  font-weight: 600;
+  white-space: nowrap;
+  border-bottom: 1.5px solid var(--border-strong);
+}
+
+.post-body .table-wrap tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.post-body .table-wrap tbody tr:nth-child(even) {
+  background: rgba(15, 118, 110, 0.035);
+}
+
+.post-body .table-wrap tbody tr:hover {
+  background: rgba(15, 118, 110, 0.08);
+}
+
+.post-body .table-wrap code {
+  font-size: 0.9em;
+  overflow-wrap: anywhere;
 }
 
 @media (max-width: 640px) {
@@ -827,6 +881,27 @@ pre {
 
     pre {
       background: #f5f5f5;
+    }
+
+    .post-body .table-wrap {
+      background: #fff;
+      border-color: var(--border-strong);
+      box-shadow: none;
+    }
+
+    .post-body .table-wrap thead th {
+      background: #ececec;
+      border-bottom: 1.5px solid var(--border-strong);
+    }
+
+    .post-body .table-wrap th,
+    .post-body .table-wrap td {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .post-body .table-wrap tbody tr:nth-child(even),
+    .post-body .table-wrap tbody tr:hover {
+      background: transparent;
     }
 
     a {
