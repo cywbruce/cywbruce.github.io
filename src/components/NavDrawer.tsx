@@ -137,7 +137,7 @@ export function NavDrawer({
                   <details
                     key={group.id}
                     className="nav-drawer-topic"
-                    defaultOpen={openByDefault}
+                    open={openByDefault}
                   >
                     <summary className="nav-drawer-topic-summary">
                       <span>{categoryLabel(group.id, t)}</span>

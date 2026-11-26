@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
 import { PostList } from '../components/PostList';
+import { GroupedPostList } from '../components/GroupedPostList';
 import {
   findPostGroup,
   UNCATEGORIZED_ID,
@@ -38,7 +39,11 @@ export function TopicPage() {
         <h1 className="topic-title">{categoryLabel(group.id, t)}</h1>
         <span className="topic-count">{group.posts.length}</span>
       </header>
-      <PostList posts={group.posts} />
+      {group.id === 'interview-lab' ? (
+        <GroupedPostList posts={group.posts} />
+      ) : (
+        <PostList posts={group.posts} />
+      )}
     </section>
   );
 }
